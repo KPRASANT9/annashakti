@@ -14,6 +14,11 @@ const LETTERS = {
     body: (name) =>
       "Namaste " + name + ",\n\nYour home is one of the first hundred kitchens.\nNot a factory. A street. A cook. A culture that still knows soak, sprout, ferment, tadka.\nTonight’s thali is the work. Hyderabad first.\n\nLift \u2192 Plate \u2192 Sleep.\nAnnashakti"
   },
+  consumer: {
+    subject: "The plate that trains with you",
+    body: (name) =>
+      "Namaste " + name + ",\n\nYou arrive as the person the kitchen is for.\nThe gym has you for an hour. The plate has the rest. This letter keeps your place among the first hundred homes that will eat the work — Fed. Trained. Clear.\nHyderabad first. One cook. A street. A culture.\n\nLift \u2192 Plate \u2192 Sleep.\nAnnashakti"
+  },
   fitness: {
     subject: "The hour under the bar now writes the plate",
     body: (name) =>
@@ -85,7 +90,7 @@ module.exports = async function handler(req, res) {
   }
 
   let mailed = false;
-  const letter = LETTERS[role] || LETTERS.kitchen;
+  const letter = LETTERS[role] || LETTERS.consumer;
   if (process.env.RESEND_API_KEY) {
     try {
       const r = await fetch("https://api.resend.com/emails", {
