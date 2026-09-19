@@ -6,32 +6,40 @@
 <title>Annashakti</title>
 <meta name="description" content="Putting the Indian body back together. First 100 kitchens, Hyderabad." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://images.unsplash.com" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Outfit:wght@400;500&display=swap" rel="stylesheet" />
 <style>
 :root{--forest:#0c1410;--cream:#f3ead8;--gold:#c9a35a;--mute:#cbbf9d}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
 body{margin:0;background:var(--forest);color:var(--cream);font-family:Outfit,system-ui,sans-serif}
 a{color:var(--gold);text-decoration:none}
-nav{position:sticky;top:0;z-index:5;display:flex;gap:1rem;flex-wrap:wrap;padding:.8rem 1.2rem;background:rgba(12,20,16,.92);border-bottom:1px solid #1c2a22}
-nav a.word{font-family:"Cormorant Garamond",serif;font-size:1.35rem;color:var(--cream)}
-section{min-height:88vh;padding:4.5rem 1.4rem 3rem;max-width:52rem;margin:0 auto}
-.kicker{letter-spacing:.16em;text-transform:uppercase;font-size:.72rem;color:var(--gold)}
-h1,h2{font-family:"Cormorant Garamond",serif;font-weight:500;line-height:1.08;margin:.4rem 0 1rem}
-h1{font-size:clamp(2.4rem,7vw,4.6rem)}
-h2{font-size:clamp(2rem,5vw,3.4rem)}
-.lede{font-size:1.15rem;color:var(--mute);max-width:36rem}
-.clock{font-family:"Cormorant Garamond",serif;font-size:clamp(2.6rem,8vw,5rem);color:var(--gold);margin:1.2rem 0 .2rem}
-.hands{display:grid;gap:1rem;margin:1.6rem 0}
-.hands article{border-top:1px solid #2a3a30;padding-top:.8rem}
-.hands h3{margin:0 0 .25rem;font-size:1rem;color:var(--gold);font-weight:500}
-form{display:grid;gap:.7rem;margin-top:1.4rem;max-width:28rem}
-label{display:grid;gap:.3rem;font-size:.9rem;color:var(--mute)}
-input,select,button{font:inherit;padding:.75rem .9rem;border-radius:.4rem;border:1px solid #2a3a30;background:#111a15;color:var(--cream)}
+nav{position:sticky;top:0;z-index:8;display:flex;gap:1.1rem;flex-wrap:wrap;padding:.85rem 1.4rem;background:rgba(12,20,16,.9);border-bottom:1px solid rgba(201,163,90,.22);backdrop-filter:blur(10px)}
+nav a.word{font-family:"Cormorant Garamond",serif;font-size:1.45rem;color:var(--cream)}
+.beat{position:relative;min-height:100vh;display:grid;align-items:end;overflow:hidden}
+.beat .plate{position:absolute;inset:0;background-size:cover;background-position:center}
+.beat .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,20,16,.22) 0%,rgba(12,20,16,.88) 78%),linear-gradient(90deg,rgba(12,20,16,.4),transparent 42%)}
+.beat .copy{position:relative;z-index:2;max-width:44rem;padding:18vh 7vw 10vh;border-left:2px solid var(--gold)}
+.kicker{letter-spacing:.18em;text-transform:uppercase;font-size:.72rem;color:var(--gold)}
+h1,h2{font-family:"Cormorant Garamond",serif;font-weight:500;line-height:1.05;margin:.35rem 0 1rem}
+h1{font-size:clamp(2.6rem,7vw,5.2rem)}h2{font-size:clamp(2.1rem,5.4vw,3.8rem)}
+.lede{font-size:1.12rem;color:var(--mute);max-width:34rem}
+.clock{font-family:"Cormorant Garamond",serif;font-size:clamp(2.8rem,8vw,5.4rem);color:var(--gold);margin:.8rem 0 .15rem}
+.hands{display:grid;gap:.9rem;margin:1.4rem 0;max-width:36rem}
+.hands article{border-top:1px solid rgba(201,163,90,.28);padding-top:.7rem}
+.hands h3{margin:0 0 .2rem;color:var(--gold);font-size:1rem;font-weight:500}
+form{display:grid;gap:.7rem;margin-top:1.3rem;max-width:28rem}
+label{display:grid;gap:.3rem;font-size:.88rem;color:var(--mute)}
+input,select,button{font:inherit;padding:.75rem .9rem;border-radius:.35rem;border:1px solid #3a4a3c;background:rgba(17,26,21,.82);color:var(--cream)}
 button{background:var(--gold);color:#1a1408;border:0;cursor:pointer;font-weight:500}
-.ok{color:#b7d7a8}.err{color:#e2a39a}
-ol.assets{padding-left:1.1rem;color:var(--mute)}
-footer{padding:2rem 1.4rem 4rem;color:#8e8670;font-size:.85rem;text-align:center}
+.ok{color:#b7d7a8}.err{color:#e2a39a}ol.assets{padding-left:1.1rem;color:var(--mute)}
+footer{padding:2rem 7vw 4rem;color:#8e8670;font-size:.85rem}
+#top .plate{background-image:url("https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=1800&q=70")}
+#aspire .plate{background-image:url("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1800&q=70")}
+#harness .plate{background-image:url("https://images.unsplash.com/photo-1556911220-e15b29be8c3f?auto=format&fit=crop&w=1800&q=70")}
+#impact .plate{background-image:url("https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=1800&q=70")}
+#scale .plate{background-image:url("https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=1800&q=70")}
+#enroll .plate{background-image:url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1800&q=70")}
+@media (max-width:720px){.beat .copy{padding:16vh 1.2rem 8vh;border-left-width:1px}}
 </style>
 </head>
 <body>
@@ -43,105 +51,96 @@ footer{padding:2rem 1.4rem 4rem;color:#8e8670;font-size:.85rem;text-align:center
   <a href="#scale">How far</a>
   <a href="#enroll">How you enter</a>
 </nav>
-<section id="top">
-  <p class="kicker">What this does</p>
-  <h1>Putting the Indian body back together.</h1>
-  <p class="lede">The gym has you for an hour. The kitchen has the rest.</p>
-  <div class="clock">1 : 23</div>
-  <p class="lede">hours under the bar · hours on the plate</p>
-  <p><a href="#aspire">Who you become →</a></p>
-</section>
-<section id="aspire">
-  <p class="kicker">Who you become</p>
-  <h2>Fed. Trained. Clear.</h2>
-  <p class="lede">A person who stays clear when the day is heavy.</p>
-  <p>I Fed · II Trained · III Clear</p>
-  <p><a href="#harness">Who holds it →</a></p>
-</section>
-<section id="harness">
-  <p class="kicker">Who holds it</p>
-  <h2>Four hands. One compass.</h2>
-  <p class="lede">Today’s session writes tonight’s thali.</p>
-  <div class="hands">
-    <article><h3>Elite fitness veterans</h3><p>The hour under the bar, written with care.</p></article>
-    <article><h3>Distinguished nutritionists</h3><p>Whole food, opened — not a packet.</p></article>
-    <article><h3>Governing-body science</h3><p>Technique that can be named, taught, repeated.</p></article>
-    <article><h3>Tech veterans</h3><p>Handling the chaos with ease — so the plate is not an accident.</p></article>
-  </div>
-  <p>Lift → Plate → Sleep</p>
-  <p><a href="#impact">What it costs if we don’t →</a></p>
-</section>
-<section id="impact">
-  <p class="kicker">What it costs if we don’t</p>
-  <h2>The split was already a bill.</h2>
-  <p class="lede">The kitchen was the cheaper hospital.</p>
-  <div class="clock">1 : 23</div>
-  <p class="lede">hour under the bar · hours on the plate</p>
-  <div class="clock">1 : 18</div>
-  <p class="lede">one private night · months of a kitchen</p>
-  <div class="clock">33 → 4</div>
-  <p class="lede">kg millet on the Indian plate</p>
-  <p><a href="#scale">How far this goes →</a></p>
-</section>
-<section id="scale">
-  <p class="kicker">How far this goes</p>
-  <h2>A thousand kitchens.</h2>
-  <p class="lede">Not one factory. Hyderabad first. One cook. A street. A culture.</p>
-  <p><a href="#enroll">How you enter →</a></p>
-</section>
-<section id="enroll">
-  <p class="kicker">How you enter</p>
-  <h2>One letter. The first hundred.</h2>
-  <p class="lede">Walk the six assets of the mission. Leave a name. We keep the place, and we write back.</p>
-  <ol class="assets">
-    <li>01 · The Bond — 1 : 23 gym hour, plate hours</li>
-    <li>02 · The Bill — 1 : 18 a ward night, eighteen months of food</li>
-    <li>03 · The Craft — Soak. Sprout. Ferment. Tadka.</li>
-    <li>04 · The Street — One cook. Homes in their own tongue.</li>
-    <li>05 · The Compass — Lift → Plate → Sleep</li>
-    <li>06 · The Person — First 100 kitchens. Hyderabad.</li>
-  </ol>
-  <form id="letter">
-    <label>Leave a name<input name="name" required minlength="2" autocomplete="name" /></label>
-    <label>Mailbox<input name="email" type="email" required autocomplete="email" /></label>
-    <label>Phone<input name="phone" type="tel" autocomplete="tel" /></label>
-    <label>City<input name="city" value="Hyderabad" autocomplete="address-level2" /></label>
-    <label>How you arrive
-      <select name="role">
-        <option value="kitchen">A kitchen in the first hundred</option>
-        <option value="fitness">Elite fitness veteran</option>
-        <option value="nutrition">Distinguished nutritionist</option>
-        <option value="science">Governing-body science</option>
-        <option value="tech">Tech veteran</option>
-      </select>
-    </label>
-    <button type="submit">Keep my place</button>
-    <p id="note" hidden></p>
-  </form>
-</section>
-<footer>Annashakti · Lift → Plate → Sleep · Hyderabad first</footer>
+<section class="beat" id="top"><div class="plate"></div><div class="veil"></div><div class="copy">
+<p class="kicker">What this does</p>
+<h1>Putting the Indian body back together.</h1>
+<p class="lede">The gym has you for an hour. The kitchen has the rest.</p>
+<div class="clock">1 : 23</div>
+<p class="lede">hours under the bar · hours on the plate</p>
+<p><a href="#aspire">Who you become →</a></p>
+</div></section>
+<section class="beat" id="aspire"><div class="plate"></div><div class="veil"></div><div class="copy">
+<p class="kicker">Who you become</p>
+<h2>Fed. Trained. Clear.</h2>
+<p class="lede">A person who stays clear when the day is heavy.</p>
+<p>I Fed · II Trained · III Clear</p>
+<p><a href="#harness">Who holds it →</a></p>
+</div></section>
+<section class="beat" id="harness"><div class="plate"></div><div class="veil"></div><div class="copy">
+<p class="kicker">Who holds it</p>
+<h2>Four hands. One compass.</h2>
+<p class="lede">Today’s session writes tonight’s thali.</p>
+<div class="hands">
+<article><h3>Elite fitness veterans</h3><p>The hour under the bar, written with care.</p></article>
+<article><h3>Distinguished nutritionists</h3><p>Whole food, opened — not a packet.</p></article>
+<article><h3>Governing-body science</h3><p>Technique that can be named, taught, repeated.</p></article>
+<article><h3>Tech veterans</h3><p>Handling the chaos with ease — so the plate is not an accident.</p></article>
+</div>
+<p>Lift → Plate → Sleep</p>
+<p><a href="#impact">What it costs if we don’t →</a></p>
+</div></section>
+<section class="beat" id="impact"><div class="plate"></div><div class="veil"></div><div class="copy">
+<p class="kicker">What it costs if we don’t</p>
+<h2>The split was already a bill.</h2>
+<p class="lede">The kitchen was the cheaper hospital.</p>
+<div class="clock">1 : 23</div><p class="lede">hour under the bar · hours on the plate</p>
+<div class="clock">1 : 18</div><p class="lede">one private night · months of a kitchen</p>
+<div class="clock">33 → 4</div><p class="lede">kg millet on the Indian plate</p>
+<p><a href="#scale">How far this goes →</a></p>
+</div></section>
+<section class="beat" id="scale"><div class="plate"></div><div class="veil"></div><div class="copy">
+<p class="kicker">How far this goes</p>
+<h2>A thousand kitchens.</h2>
+<p class="lede">Not one factory. Hyderabad first. One cook. A street. A culture.</p>
+<p><a href="#enroll">How you enter →</a></p>
+</div></section>
+<section class="beat" id="enroll"><div class="plate"></div><div class="veil"></div><div class="copy">
+<p class="kicker">How you enter</p>
+<h2>One letter. The first hundred.</h2>
+<p class="lede">Walk the six assets of the mission. Leave a name. We keep the place, and we write back.</p>
+<ol class="assets">
+<li>01 · The Bond — 1 : 23 gym hour, plate hours</li>
+<li>02 · The Bill — 1 : 18 a ward night, eighteen months of food</li>
+<li>03 · The Craft — Soak. Sprout. Ferment. Tadka.</li>
+<li>04 · The Street — One cook. Homes in their own tongue.</li>
+<li>05 · The Compass — Lift → Plate → Sleep</li>
+<li>06 · The Person — First 100 kitchens. Hyderabad.</li>
+</ol>
+<form id="letter">
+<label>Leave a name<input name="name" required minlength="2" autocomplete="name" /></label>
+<label>Mailbox<input name="email" type="email" required autocomplete="email" /></label>
+<label>Phone<input name="phone" type="tel" autocomplete="tel" /></label>
+<label>City<input name="city" value="Hyderabad" autocomplete="address-level2" /></label>
+<label>How you arrive<select name="role">
+<option value="kitchen">A kitchen in the first hundred</option>
+<option value="fitness">Elite fitness veteran</option>
+<option value="nutrition">Distinguished nutritionist</option>
+<option value="science">Governing-body science</option>
+<option value="tech">Tech veteran</option>
+</select></label>
+<button type="submit">Keep my place</button>
+<p id="note" hidden></p>
+</form>
+</div></section>
+<footer>Annashakti · Lift → Plate → Sleep · Hyderabad first · <a href="/kitchen">Kitchen book</a></footer>
 <script>
-const form=document.getElementById("letter");
-const note=document.getElementById("note");
+const form=document.getElementById("letter");const note=document.getElementById("note");
 form.addEventListener("submit",async(e)=>{
-  e.preventDefault();
-  note.hidden=false;note.className="";note.textContent="Holding your place…";
-  const data=Object.fromEntries(new FormData(form).entries());
-  try{
-    const res=await fetch("/api/enroll",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
-    const body=await res.json().catch(()=>({}));
-    if(!res.ok||!body.ok) throw new Error(body.reason||"send");
-    note.className="ok";
-    note.textContent=body.mailed?"Place kept. A letter is on the way to your mailbox.":"Place kept. We have the name. Welcome mail waits on Resend being connected.";
-    form.reset();
-  }catch{
-    note.className="err";
-    note.textContent="The letter did not land. Try again in a moment.";
-  }
+e.preventDefault();note.hidden=false;note.className="";note.textContent="Holding your place…";
+const data=Object.fromEntries(new FormData(form).entries());
+try{
+const res=await fetch("/api/enroll",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+const body=await res.json().catch(()=>({}));
+if(!res.ok||!body.ok) throw 0;
+note.className="ok";
+if(body.stored&&body.mailed) note.textContent="Place kept in the book. A letter for your role is on the way.";
+else if(body.stored) note.textContent="Place kept in the book. Welcome mail did not leave.";
+else if(body.mailed) note.textContent="Letter sent. The book did not store the row.";
+else note.textContent="Name arrived. Book and mailbox are not connected yet.";
+form.reset();
+}catch{note.className="err";note.textContent="The letter did not land. Try again.";}
 });
-if(location.pathname==="/enter"||location.pathname==="/join"){
-  document.getElementById("enroll").scrollIntoView();
-}
+if(/\/(enter|join)\/?$/.test(location.pathname)) document.getElementById("enroll").scrollIntoView();
 </script>
 </body>
 </html>
