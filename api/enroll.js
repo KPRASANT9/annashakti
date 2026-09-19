@@ -17,7 +17,7 @@ const LETTERS = {
   consumer: {
     subject: "The plate that trains with you",
     body: (name) =>
-      "Namaste " + name + ",\n\nYou arrive as the person the kitchen is for.\nThe gym has you for an hour. The plate has the rest. This letter keeps your place among the first hundred homes that will eat the work — Fed. Trained. Clear.\nHyderabad first. One cook. A street. A culture.\n\nLift \u2192 Plate \u2192 Sleep.\nAnnashakti"
+      "Namaste " + name + ",\n\nYou arrive as the person the kitchen is for.\nNot a vendor. Not a system. The body that lifts, eats, and sleeps.\nThe gym has you for an hour. Your kitchen has the rest. That is how you stay clear when the day is heavy.\n\nWalk the six assets. Keep the plate honest. Hyderabad first.\n\nLift \u2192 Plate \u2192 Sleep.\nAnnashakti"
   },
   fitness: {
     subject: "The hour under the bar now writes the plate",
@@ -90,7 +90,7 @@ module.exports = async function handler(req, res) {
   }
 
   let mailed = false;
-  const letter = LETTERS[role] || LETTERS.consumer;
+  const letter = LETTERS[role] || LETTERS.kitchen;
   if (process.env.RESEND_API_KEY) {
     try {
       const r = await fetch("https://api.resend.com/emails", {
