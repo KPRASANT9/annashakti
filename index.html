@@ -25,7 +25,7 @@ header.is-scrolled{background:rgba(12,20,16,.92)!important;border-bottom:1px sol
 #catalog{position:fixed;inset:0;z-index:70;background:rgba(12,20,16,.97);transform:translateX(100%);transition:transform .35s ease;overflow:auto;padding:5.5rem 1.4rem 3rem}
 #catalog.open{transform:none}
 body.catalog-open{overflow:hidden}
-.cat-list a{display:block;padding:1rem 0;border-bottom:1px solid rgba(201,163,90,.18);text-decoration:none;color:#f3ead8}
+.cat-list a{display:block;padding:1.05rem 0;border-bottom:1px solid rgba(201,163,90,.18);text-decoration:none;color:#f3ead8;font-family:"Cormorant Garamond",serif;font-size:2rem;letter-spacing:.02em}
 @media (prefers-reduced-motion:reduce){
   html{scroll-snap-type:none}
   .statement-copy{opacity:1;transform:none;filter:none;transition:none}
@@ -50,19 +50,16 @@ body.catalog-open{overflow:hidden}
 </header>
 <aside id="catalog" role="dialog" aria-label="Catalog">
   <div class="flex items-start justify-between">
-    <div>
-      <p class="kicker">Catalog</p>
-      <p class="mt-2 font-display text-3xl">The kitchen</p>
-    </div>
+    <p class="kicker">Annashakti</p>
     <button type="button" id="catalog-close" class="text-xs tracking-[0.22em] uppercase text-gold">Close</button>
   </div>
   <nav class="cat-list mt-10">
-    <a href="/#achieve" data-close-catalog><span class="kicker">01 · Achieve</span><span class="mt-1 block font-display text-2xl">What this does</span></a>
-    <a href="/#aspire" data-close-catalog><span class="kicker">02 · Aspire</span><span class="mt-1 block font-display text-2xl">Who you become</span></a>
-    <a href="/#harness" data-close-catalog><span class="kicker">03 · Harness</span><span class="mt-1 block font-display text-2xl">Who holds it</span></a>
-    <a href="/#impact" data-close-catalog><span class="kicker">04 · Impact</span><span class="mt-1 block font-display text-2xl">What it costs if we don’t</span></a>
-    <a href="/#scale" data-close-catalog><span class="kicker">05 · Scale</span><span class="mt-1 block font-display text-2xl">How far this goes</span></a>
-    <a href="/#enroll" data-close-catalog><span class="kicker">06 · Enter</span><span class="mt-1 block font-display text-2xl">How you enter</span></a>
+    <a href="/#achieve" data-close-catalog>Achieve</a>
+    <a href="/#aspire" data-close-catalog>Aspire</a>
+    <a href="/#harness" data-close-catalog>Harness</a>
+    <a href="/#impact" data-close-catalog>Impact</a>
+    <a href="/#scale" data-close-catalog>Scale</a>
+    <a href="/#enroll" data-close-catalog>Enter</a>
   </nav>
 </aside>
 <section id="achieve" class="gold-rail grain relative min-h-svh overflow-hidden">
