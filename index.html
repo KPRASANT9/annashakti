@@ -17,6 +17,12 @@ section.gold-rail,section#enroll{min-height:100svh}
 .statement-copy{opacity:0;transform:translate3d(0,28px,0);filter:blur(6px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1),filter .9s ease}
 section.is-in .statement-copy{opacity:1;transform:none;filter:none}
 header.is-scrolled{background:rgba(12,20,16,.92)!important;border-bottom:1px solid rgba(201,163,90,.18)}
+#menu-btn{width:2.6rem;height:2.6rem;border-radius:999px;border:1px solid rgba(201,163,90,.45);background:rgba(12,20,16,.55);color:#c9a35a;font-size:1.15rem;line-height:1;cursor:pointer}
+#menu-btn[aria-expanded="true"]{background:#c9a35a;color:#0c1410}
+#catalog-panel{position:fixed;inset:0;z-index:60;display:none;background:rgba(8,17,14,.96);overflow:auto;padding:5.5rem 1.4rem 2.5rem}
+#catalog-panel.open{display:block}
+body.catalog-open{overflow:hidden}
+.cat-list a{display:block;padding:1rem 0;border-bottom:1px solid rgba(201,163,90,.2);text-decoration:none;color:#f3ead8}
 @media (prefers-reduced-motion:reduce){
   html{scroll-snap-type:none}
   .statement-copy{opacity:1;transform:none;filter:none;transition:none}
@@ -35,8 +41,22 @@ header.is-scrolled{background:rgba(12,20,16,.92)!important;border-bottom:1px sol
       <a href="/#scale" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Scale</a>
       <a href="/#enroll" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Enter</a>
     </nav>
+    <button type="button" id="menu-btn" aria-controls="catalog-panel" aria-expanded="false" aria-label="Open catalog">☰</button>
   </div>
 </header>
+<div id="catalog-panel" role="dialog" aria-label="Kitchen catalog">
+  <p class="kicker">The catalog</p>
+  <p class="mt-3 font-display text-3xl text-cream">Six beats.</p>
+  <div class="cat-list mt-8">
+    <a href="/#achieve"><span class="kicker">01 · Achieve</span><span class="mt-1 block font-display text-2xl">Putting the Indian body back together.</span></a>
+    <a href="/#aspire"><span class="kicker">02 · Aspire</span><span class="mt-1 block font-display text-2xl">Fed. Trained. Clear.</span></a>
+    <a href="/#harness"><span class="kicker">03 · Harness</span><span class="mt-1 block font-display text-2xl">Four hands. One compass.</span></a>
+    <a href="/#impact"><span class="kicker">04 · Impact</span><span class="mt-1 block font-display text-2xl">The split was already a bill.</span></a>
+    <a href="/#scale"><span class="kicker">05 · Scale</span><span class="mt-1 block font-display text-2xl">A thousand kitchens.</span></a>
+    <a href="/#enroll"><span class="kicker">06 · Enter</span><span class="mt-1 block font-display text-2xl">One letter. The first hundred.</span></a>
+  </div>
+  <p class="mt-8"><button type="button" id="menu-close" class="text-xs tracking-widest uppercase text-gold bg-transparent border-0 p-0 cursor-pointer">Close</button></p>
+</div>
 <section id="achieve" class="gold-rail grain relative min-h-svh overflow-hidden">
   <video class="absolute inset-0 size-full object-cover" autoplay muted loop playsinline poster="https://star-iris-sky-kind.grok.me/images/hero-hands.jpg"><source src="https://star-iris-sky-kind.grok.me/video/hero.mp4" type="video/mp4"/></video>
   <div class="veil-left absolute inset-0"></div><div class="veil-bottom absolute inset-0"></div>
@@ -154,6 +174,22 @@ header.is-scrolled{background:rgba(12,20,16,.92)!important;border-bottom:1px sol
 </footer>
 <script>
 const header=document.querySelector("header");
+const panel=document.getElementById("catalog-panel");
+const menuBtn=document.getElementById("menu-btn");
+const closeBtn=document.getElementById("menu-close");
+function setCatalog(on){
+  if(!panel) return;
+  panel.classList.toggle("open",on);
+  document.body.classList.toggle("catalog-open",on);
+  if(menuBtn){
+    menuBtn.setAttribute("aria-expanded", on?"true":"false");
+    menuBtn.setAttribute("aria-label", on?"Close catalog":"Open catalog");
+    menuBtn.textContent=on?"×":"☰";
+  }
+}
+if(menuBtn) menuBtn.addEventListener("click",()=>setCatalog(!panel.classList.contains("open")));
+if(closeBtn) closeBtn.addEventListener("click",()=>setCatalog(false));
+if(panel) panel.querySelectorAll("a").forEach((a)=>a.addEventListener("click",()=>setCatalog(false)));
 const beats=[...document.querySelectorAll("section.gold-rail, section#enroll")];
 const live=new IntersectionObserver((entries)=>{
   entries.forEach((entry)=>{ if(entry.isIntersecting) entry.target.classList.add("is-in"); });
@@ -169,6 +205,7 @@ document.querySelectorAll('a[href^="/#"]').forEach((link)=>{
     const node=document.getElementById(id);
     if(!node) return;
     event.preventDefault();
+    setCatalog(false);
     node.scrollIntoView({behavior:"smooth", block:"start"});
   });
 });
@@ -190,6 +227,7 @@ form.addEventListener("submit", async (e)=>{
   }
 });
 if(location.pathname==="/enter"||location.pathname==="/join") document.getElementById("enroll").scrollIntoView();
+if(location.pathname==="/catalog") setCatalog(true);
 </script>
 </body>
 </html>
