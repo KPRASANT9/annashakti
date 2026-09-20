@@ -93,14 +93,15 @@ module.exports = async function handler(req, res) {
   let mailStatus = "not-sent";
   const letter = LETTERS[role] || LETTERS.kitchen;
   const from = process.env.RESEND_FROM || "Annashakti <hello@annashakti.org>";
-  if (!process.env.RESEND_API_KEY) {
+  const key = process.env.RESEND_API_KEY || "";
+  if (!key) {
     mailStatus = "no-key";
   } else {
     try {
       const r = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
-          Authorization: "Bearer " + process.env.RESEND_API_KEY,
+          Authorization: "Bearer " + key,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
