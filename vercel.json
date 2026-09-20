@@ -3,7 +3,7 @@
   "rewrites": [
     { "source": "/enter", "destination": "/index.html" },
     { "source": "/join", "destination": "/index.html" },
-    { "source": "/kitchen", "destination": "/kitchen.html" },
-    { "source": "/catalog", "destination": "/catalog.html" }
+    { "source": "/catalog", "destination": "/index.html" },
+    { "source": "/kitchen", "destination": "/kitchen.html" }
   ]
 }
