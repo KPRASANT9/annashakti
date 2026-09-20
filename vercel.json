@@ -1,9 +1,11 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/catalog", "destination": "/", "permanent": true },
+    { "source": "/enter", "destination": "/", "permanent": true },
+    { "source": "/join", "destination": "/", "permanent": true }
+  ],
   "rewrites": [
-    { "source": "/enter", "destination": "/index.html" },
-    { "source": "/join", "destination": "/index.html" },
-    { "source": "/catalog", "destination": "/index.html" },
     { "source": "/kitchen", "destination": "/kitchen.html" }
   ]
 }
