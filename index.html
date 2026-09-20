@@ -21,7 +21,7 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
 .site-bar nav{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1.1rem;justify-content:flex-end}
 .site-bar nav a{color:#f3ead8;text-decoration:none;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
 .site-bar nav a:hover{color:#c9a35a}
-.menu-btn{flex:none;width:2.5rem;height:2.5rem;border-radius:999px;border:1px solid #c9a35a;background:#0c1410;color:#f3ead8;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.menu-btn{display:none;flex:none;width:2.5rem;height:2.5rem;border-radius:999px;border:1px solid #c9a35a;background:#0c1410;color:#f3ead8;align-items:center;justify-content:center;cursor:pointer}
 .menu-btn span,.menu-btn span:before,.menu-btn span:after{display:block;width:14px;height:1.5px;background:#f3ead8;position:relative}
 .menu-btn span:before,.menu-btn span:after{content:"";position:absolute;left:0}
 .menu-btn span:before{top:-5px}
@@ -32,6 +32,11 @@ body.catalog-open{overflow:hidden}
 .cat-list a{display:block;padding:1.05rem 0;border-bottom:1px solid rgba(201,163,90,.18);text-decoration:none;color:#f3ead8;font-family:"Cormorant Garamond",serif;font-size:2rem}
 @media (max-width:720px){
   .site-bar nav{display:none}
+  .menu-btn{display:inline-flex}
+}
+@media (min-width:721px){
+  #catalog,#catalog.open{display:none !important;visibility:hidden;pointer-events:none}
+  body.catalog-open{overflow:auto}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-snap-type:none}
@@ -183,16 +188,16 @@ body.catalog-open{overflow:hidden}
   </div>
 </footer>
 <script>
-const header=document.querySelector("header");
 const catalog=document.getElementById("catalog");
 const openBtn=document.getElementById("catalog-open");
 const closeBtn=document.getElementById("catalog-close");
-const openCatalog=()=>{catalog.classList.add("open");document.body.classList.add("catalog-open");openBtn.setAttribute("aria-expanded","true");};
+const openCatalog=()=>{if(window.matchMedia("(min-width:721px)").matches) return;catalog.classList.add("open");document.body.classList.add("catalog-open");openBtn.setAttribute("aria-expanded","true");};
 const closeCatalog=()=>{catalog.classList.remove("open");document.body.classList.remove("catalog-open");openBtn.setAttribute("aria-expanded","false");};
 openBtn.addEventListener("click",openCatalog);
 closeBtn.addEventListener("click",closeCatalog);
 catalog.querySelectorAll("[data-close-catalog]").forEach((link)=>link.addEventListener("click",closeCatalog));
 document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeCatalog(); });
+window.addEventListener("resize",()=>{ if(window.matchMedia("(min-width:721px)").matches) closeCatalog(); });
 const beats=[...document.querySelectorAll("section.gold-rail, section#enroll")];
 const live=new IntersectionObserver((entries)=>{
   entries.forEach((entry)=>{ if(entry.isIntersecting) entry.target.classList.add("is-in"); });
@@ -227,7 +232,6 @@ form.addEventListener("submit", async (e)=>{
   }
 });
 if(location.pathname==="/enter"||location.pathname==="/join") document.getElementById("enroll").scrollIntoView();
-if(location.pathname==="/catalog") openCatalog();
 </script>
 </body>
 </html>
