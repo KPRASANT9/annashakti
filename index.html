@@ -16,16 +16,23 @@ section.gold-rail,section#enroll,footer{scroll-snap-align:start}
 section.gold-rail,section#enroll{min-height:100svh}
 .statement-copy{opacity:0;transform:translate3d(0,28px,0);filter:blur(6px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1),filter .9s ease}
 section.is-in .statement-copy{opacity:1;transform:none;filter:none}
-header.is-scrolled{background:rgba(12,20,16,.92)!important;border-bottom:1px solid rgba(201,163,90,.18)}
-.menu-btn{width:2.6rem;height:2.6rem;border-radius:999px;border:1px solid rgba(201,163,90,.45);background:rgba(12,20,16,.55);color:#f3ead8;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.site-bar{position:fixed;inset:0 0 auto 0;z-index:200;display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.7rem 1rem;background:rgba(12,20,16,.82);border-bottom:1px solid rgba(201,163,90,.28);backdrop-filter:blur(10px)}
+.site-bar a.brand{font-family:"Cormorant Garamond",serif;color:#f3ead8;text-decoration:none;font-size:1.35rem;white-space:nowrap}
+.site-bar nav{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1.1rem;justify-content:flex-end}
+.site-bar nav a{color:#f3ead8;text-decoration:none;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
+.site-bar nav a:hover{color:#c9a35a}
+.menu-btn{flex:none;width:2.5rem;height:2.5rem;border-radius:999px;border:1px solid #c9a35a;background:#0c1410;color:#f3ead8;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
 .menu-btn span,.menu-btn span:before,.menu-btn span:after{display:block;width:14px;height:1.5px;background:#f3ead8;position:relative}
 .menu-btn span:before,.menu-btn span:after{content:"";position:absolute;left:0}
 .menu-btn span:before{top:-5px}
 .menu-btn span:after{top:5px}
-#catalog{position:fixed;inset:0;z-index:70;background:rgba(12,20,16,.97);transform:translateX(100%);transition:transform .35s ease;overflow:auto;padding:5.5rem 1.4rem 3rem}
-#catalog.open{transform:none}
+#catalog{position:fixed;inset:0;z-index:180;background:rgba(12,20,16,.97);transform:translateX(100%);transition:transform .35s ease;overflow:auto;padding:5.5rem 1.4rem 3rem;pointer-events:none;visibility:hidden}
+#catalog.open{transform:none;pointer-events:auto;visibility:visible}
 body.catalog-open{overflow:hidden}
-.cat-list a{display:block;padding:1.05rem 0;border-bottom:1px solid rgba(201,163,90,.18);text-decoration:none;color:#f3ead8;font-family:"Cormorant Garamond",serif;font-size:2rem;letter-spacing:.02em}
+.cat-list a{display:block;padding:1.05rem 0;border-bottom:1px solid rgba(201,163,90,.18);text-decoration:none;color:#f3ead8;font-family:"Cormorant Garamond",serif;font-size:2rem}
+@media (max-width:720px){
+  .site-bar nav{display:none}
+}
 @media (prefers-reduced-motion:reduce){
   html{scroll-snap-type:none}
   .statement-copy{opacity:1;transform:none;filter:none;transition:none}
@@ -34,19 +41,17 @@ body.catalog-open{overflow:hidden}
 </style>
 </head>
 <body class="bg-ink text-cream font-sans">
-<header class="fixed inset-x-0 top-0 z-80 bg-transparent">
-  <div class="flex items-center justify-between gap-4 px-5 py-4 md:px-10">
-    <a class="font-display text-xl tracking-wide text-cream md:text-2xl" href="/">Annashakti</a>
-    <nav class="hidden items-center gap-7 lg:flex">
-      <a href="/#achieve" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Achieve</a>
-      <a href="/#aspire" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Aspire</a>
-      <a href="/#harness" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Harness</a>
-      <a href="/#impact" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Impact</a>
-      <a href="/#scale" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Scale</a>
-      <a href="/#enroll" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Enter</a>
-    </nav>
-    <button type="button" class="menu-btn" id="catalog-open" aria-label="Catalog" aria-controls="catalog" aria-expanded="false"><span></span></button>
-  </div>
+<header class="site-bar">
+  <a class="brand" href="/">Annashakti</a>
+  <nav aria-label="Kitchen toolbar">
+    <a href="/#achieve">Achieve</a>
+    <a href="/#aspire">Aspire</a>
+    <a href="/#harness">Harness</a>
+    <a href="/#impact">Impact</a>
+    <a href="/#scale">Scale</a>
+    <a href="/#enroll">Enter</a>
+  </nav>
+  <button type="button" class="menu-btn" id="catalog-open" aria-label="Catalog" aria-controls="catalog" aria-expanded="false"><span></span></button>
 </header>
 <aside id="catalog" role="dialog" aria-label="Catalog">
   <div class="flex items-start justify-between">
@@ -194,9 +199,6 @@ const live=new IntersectionObserver((entries)=>{
 },{threshold:0.28, rootMargin:"0px 0px -10% 0px"});
 beats.forEach((beat)=>live.observe(beat));
 if(beats[0]) beats[0].classList.add("is-in");
-const onScroll=()=>{ if(header) header.classList.toggle("is-scrolled", window.scrollY>24); };
-window.addEventListener("scroll", onScroll, {passive:true});
-onScroll();
 document.querySelectorAll('a[href^="/#"]').forEach((link)=>{
   link.addEventListener("click",(event)=>{
     const id=link.getAttribute("href").slice(2);
