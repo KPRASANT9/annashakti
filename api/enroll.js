@@ -85,13 +85,17 @@ module.exports = async function handler(req, res) {
           name = excluded.name, phone = excluded.phone, role = excluded.role, city = excluded.city`;
       stored = true;
     } catch {
-      return send(res, 500, { ok: false, error: "store", stored: false, mailed: false });
+      stored = false;
     }
   }
 
   let mailed = false;
+  let mailStatus = "not-sent";
   const letter = LETTERS[role] || LETTERS.kitchen;
-  if (process.env.RESEND_API_KEY) {
+  const from = process.env.RESEND_FROM || "Annashakti <hello@annashakti.org>";
+  if (!process.env.RESEND_API_KEY) {
+    mailStatus = "no-key";
+  } else {
     try {
       const r = await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -100,17 +104,23 @@ module.exports = async function handler(req, res) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          from: process.env.RESEND_FROM || "Annashakti <onboarding@resend.dev>",
+          from,
           to: [email],
           subject: letter.subject,
           text: letter.body(name)
         })
       });
       mailed = r.ok;
+      mailStatus = String(r.status);
+      if (!r.ok) {
+        const err = await r.json().catch(() => ({}));
+        mailStatus = String((err && err.message) || r.status).slice(0, 180);
+      }
     } catch {
       mailed = false;
+      mailStatus = "network";
     }
   }
 
-  send(res, 200, { ok: true, stored, mailed, name, email, role, city });
+  send(res, 200, { ok: true, stored, mailed, mailStatus, name, email, role, city });
 };
