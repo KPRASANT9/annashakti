@@ -27,17 +27,19 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
 .menu-btn span:before,.menu-btn span:after{content:"";position:absolute;left:0}
 .menu-btn span:before{top:-5px}
 .menu-btn span:after{top:5px}
-#catalog{position:fixed;inset:0;z-index:180;background:rgba(12,20,16,.97);transform:translateX(100%);transition:transform .35s ease;overflow:auto;padding:5.5rem 1.4rem 3rem;pointer-events:none;visibility:hidden}
-#catalog.open{transform:none;pointer-events:auto;visibility:visible}
-body.catalog-open{overflow:hidden}
-.cat-list a{display:block;padding:1.05rem 0;border-bottom:1px solid rgba(201,163,90,.18);text-decoration:none;color:#f3ead8;font-family:"Cormorant Garamond",serif;font-size:2rem}
+.menu-btn[aria-expanded="true"] span{background:transparent}
+.menu-btn[aria-expanded="true"] span:before{top:0;transform:rotate(45deg)}
+.menu-btn[aria-expanded="true"] span:after{top:0;transform:rotate(-45deg)}
+#catalog{position:fixed;top:3.55rem;right:.75rem;left:auto;bottom:auto;z-index:190;width:min(14.5rem,calc(100vw - 1.5rem));max-height:min(20rem,calc(100svh - 5rem));background:rgba(12,20,16,.96);border:1px solid rgba(201,163,90,.35);border-radius:.65rem;box-shadow:0 12px 32px rgba(0,0,0,.35);transform:translateY(-6px);opacity:0;transition:transform .25s ease,opacity .25s ease,visibility .25s ease;overflow:auto;padding:.35rem .95rem;pointer-events:none;visibility:hidden}
+#catalog.open{transform:none;opacity:1;pointer-events:auto;visibility:visible}
+.cat-list a{display:block;padding:.55rem 0;border-bottom:1px solid rgba(201,163,90,.18);text-decoration:none;color:#f3ead8;font-family:"Cormorant Garamond",serif;font-size:1.2rem}
+.cat-list a:last-child{border-bottom:0}
 @media (max-width:720px){
   .site-bar nav{display:none}
   .menu-btn{display:inline-flex}
 }
 @media (min-width:721px){
   #catalog,#catalog.open{display:none !important;visibility:hidden;pointer-events:none}
-  body.catalog-open{overflow:auto}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-snap-type:none}
@@ -60,17 +62,13 @@ body.catalog-open{overflow:hidden}
   <button type="button" class="menu-btn" id="catalog-open" aria-label="Catalog" aria-controls="catalog" aria-expanded="false"><span></span></button>
 </header>
 <aside id="catalog" role="dialog" aria-label="Catalog">
-  <div class="flex items-start justify-between">
-    <p class="kicker">Annashakti</p>
-    <button type="button" id="catalog-close" class="text-xs tracking-[0.22em] uppercase text-gold">Close</button>
-  </div>
-  <nav class="cat-list mt-10">
-    <a href="/#achieve" data-close-catalog>Achieve</a>
-    <a href="/#aspire" data-close-catalog>Aspire</a>
-    <a href="/#harness" data-close-catalog>Harness</a>
-    <a href="/#impact" data-close-catalog>Impact</a>
-    <a href="/#scale" data-close-catalog>Scale</a>
-    <a href="/#enroll" data-close-catalog>Enter</a>
+  <nav class="cat-list">
+    <a href="/#achieve">Achieve</a>
+    <a href="/#aspire">Aspire</a>
+    <a href="/#harness">Harness</a>
+    <a href="/#impact">Impact</a>
+    <a href="/#scale">Scale</a>
+    <a href="/#enroll">Enter</a>
   </nav>
 </aside>
 <section id="achieve" class="gold-rail grain relative min-h-svh overflow-hidden">
@@ -190,15 +188,16 @@ body.catalog-open{overflow:hidden}
 </footer>
 <script>
 const catalog=document.getElementById("catalog");
-const openBtn=document.getElementById("catalog-open");
-const closeBtn=document.getElementById("catalog-close");
-const openCatalog=()=>{if(window.matchMedia("(min-width:721px)").matches) return;catalog.classList.add("open");document.body.classList.add("catalog-open");openBtn.setAttribute("aria-expanded","true");};
-const closeCatalog=()=>{catalog.classList.remove("open");document.body.classList.remove("catalog-open");openBtn.setAttribute("aria-expanded","false");};
-openBtn.addEventListener("click",openCatalog);
-closeBtn.addEventListener("click",closeCatalog);
-catalog.querySelectorAll("[data-close-catalog]").forEach((link)=>link.addEventListener("click",closeCatalog));
-document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeCatalog(); });
-window.addEventListener("resize",()=>{ if(window.matchMedia("(min-width:721px)").matches) closeCatalog(); });
+const menuBtn=document.getElementById("catalog-open");
+const setCatalog=(open)=>{
+  catalog.classList.toggle("open", open);
+  menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+};
+menuBtn.addEventListener("click",()=>{
+  if(window.matchMedia("(min-width:721px)").matches) return;
+  setCatalog(!catalog.classList.contains("open"));
+});
+window.addEventListener("resize",()=>{ if(window.matchMedia("(min-width:721px)").matches) setCatalog(false); });
 const beats=[...document.querySelectorAll("section.gold-rail, section#enroll")];
 const live=new IntersectionObserver((entries)=>{
   entries.forEach((entry)=>{ if(entry.isIntersecting) entry.target.classList.add("is-in"); });
@@ -211,7 +210,6 @@ document.querySelectorAll('a[href^="/#"]').forEach((link)=>{
     const node=document.getElementById(id);
     if(!node) return;
     event.preventDefault();
-    closeCatalog();
     node.scrollIntoView({behavior:"smooth", block:"start"});
   });
 });
