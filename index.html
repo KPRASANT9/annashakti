@@ -34,8 +34,13 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
 #catalog.open{transform:none;opacity:1;pointer-events:auto;visibility:visible}
 .cat-list a{display:block;padding:.5rem 0;border-bottom:1px solid rgba(201,163,90,.18);text-decoration:none;color:#f3ead8;font-family:"Cormorant Garamond",serif;font-size:1.15rem}
 .cat-list a:last-child{border-bottom:0}
-.mission-letter p{max-width:40rem;color:rgba(243,234,216,.82);font-size:1.05rem;line-height:1.65}
+.mission-letter{display:none;max-width:40rem;margin-top:2rem}
+.mission-letter.open{display:block}
+.mission-letter p{color:rgba(243,234,216,.82);font-size:1.05rem;line-height:1.65}
 .mission-letter p + p{margin-top:1.05rem}
+#mission-toggle{background:none;border:0;padding:0;cursor:pointer;font:inherit}
+#mission-toggle[aria-expanded="true"] .open-label{display:none}
+#mission-toggle[aria-expanded="false"] .close-label{display:none}
 @media (max-width:720px){
   .site-bar nav{display:none}
   .menu-btn{display:inline-flex}
@@ -77,7 +82,6 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
     <a href="/#enroll">Enter</a>
   </nav>
 </aside>
-
 <section id="achieve" class="gold-rail grain relative min-h-svh overflow-hidden">
   <video class="absolute inset-0 size-full object-cover" autoplay muted loop playsinline poster="https://star-iris-sky-kind.grok.me/images/hero-hands.jpg"><source src="https://star-iris-sky-kind.grok.me/video/hero.mp4" type="video/mp4"/></video>
   <div class="veil-left absolute inset-0"></div><div class="veil-bottom absolute inset-0"></div>
@@ -92,23 +96,25 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
     </div>
   </div>
 </section>
-
 <section id="unlock" class="gold-rail bg-forest">
   <div class="relative z-10 flex min-h-svh flex-col justify-center px-5 py-24 md:px-12">
     <div class="statement-copy max-w-4xl">
       <p class="kicker">The mission</p>
       <h2 class="mt-5 font-display text-statement text-cream">To unlock human potential.</h2>
-      <p class="mt-4 font-display text-2xl italic text-gold md:text-3xl">A deeply purposeful life. Clarity and calm under pressure.</p>
-      <div class="mission-letter mt-12 border-l border-gold/35 pl-5">
+      <p class="mt-8 max-w-3xl font-display text-2xl text-cream md:text-3xl">We build science-backed systems that bring physical fitness, precise nourishment, and mental resilience into one way of living — giving people the clarity, capacity, and time to pursue what matters most.</p>
+      <button type="button" id="mission-toggle" class="mt-12 inline-block text-xs tracking-[0.22em] uppercase text-gold" aria-expanded="false" aria-controls="mission-letter">
+        <span class="open-label">Read the full mission →</span>
+        <span class="close-label">Close the letter</span>
+      </button>
+      <div id="mission-letter" class="mission-letter border-l border-gold/35 pl-5">
         <p>At Annashakti, our mission is to unlock the peak of human potential, empowering every individual to lead a deeply purposeful and impactful life. We create advanced, science-backed systems that optimize holistic well-being — integrating physical fitness, precise nourishment, and mental resilience.</p>
         <p>By equipping people with the tools to navigate life’s complex challenges with absolute clarity and calm under pressure, we build an internal compass for conscious, fully realized living.</p>
         <p>To make this transformation truly universal, we back our human-centric insights with a powerful digital framework, smart logistics, and a seamless supply chain. We eliminate the daily friction of sustainable living, dramatically increasing productivity and returning time back to individuals so they can freely pursue their true vocations.</p>
       </div>
-      <a href="/#possible" class="mt-12 inline-block text-xs tracking-[0.22em] uppercase text-gold">What becomes possible →</a>
+      <a href="/#possible" class="mt-12 block text-xs tracking-[0.22em] uppercase text-gold">What becomes possible →</a>
     </div>
   </div>
 </section>
-
 <section id="possible" class="gold-rail relative min-h-svh">
   <div class="absolute inset-0 overflow-hidden"><img src="https://star-iris-sky-kind.grok.me/images/compass-rest.jpg" alt="Rest after the work" class="absolute inset-0 size-full object-cover"/><div class="veil-bottom absolute inset-0"></div><div class="veil-left absolute inset-0"></div></div>
   <div class="relative z-10 flex min-h-svh flex-col px-5 pt-28 md:px-12 justify-end pb-16 md:pb-24">
@@ -121,7 +127,6 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
     </div>
   </div>
 </section>
-
 <section id="harness" class="gold-rail relative min-h-svh">
   <div class="absolute inset-0 overflow-hidden"><img src="https://star-iris-sky-kind.grok.me/images/bond-athlete.jpg" alt="A trained body under the bar" class="absolute inset-0 size-full object-cover"/><div class="veil-bottom absolute inset-0"></div><div class="veil-left absolute inset-0"></div></div>
   <div class="relative z-10 flex min-h-svh flex-col px-5 pt-28 md:px-12 justify-center pb-16">
@@ -140,7 +145,6 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
     </div>
   </div>
 </section>
-
 <section id="impact" class="gold-rail relative min-h-svh">
   <div class="absolute inset-0 overflow-hidden"><img src="https://star-iris-sky-kind.grok.me/images/bill-ward.jpg" alt="A hospital ward" class="absolute inset-0 size-full object-cover"/><div class="veil-bottom absolute inset-0"></div><div class="veil-left absolute inset-0"></div></div>
   <div class="relative z-10 flex min-h-svh flex-col px-5 pt-28 md:px-12 justify-end pb-16 md:pb-24">
@@ -157,7 +161,6 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
     </div>
   </div>
 </section>
-
 <section id="scale" class="gold-rail relative min-h-svh">
   <div class="absolute inset-0 overflow-hidden"><img src="https://star-iris-sky-kind.grok.me/images/street-cook.jpg" alt="A neighbourhood cook" class="absolute inset-0 size-full object-cover"/><div class="veil-bottom absolute inset-0"></div><div class="veil-left absolute inset-0"></div></div>
   <div class="relative z-10 flex min-h-svh flex-col px-5 pt-28 md:px-12 justify-end pb-16 md:pb-24">
@@ -170,7 +173,6 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
     </div>
   </div>
 </section>
-
 <section id="build" class="gold-rail bg-ink">
   <div class="relative z-10 flex min-h-svh flex-col justify-center px-5 py-24 md:px-12">
     <div class="statement-copy max-w-4xl">
@@ -195,7 +197,6 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
     </div>
   </div>
 </section>
-
 <section id="enroll" class="gold-rail bg-ink">
   <div class="grid lg:grid-cols-2">
     <div class="flex flex-col justify-center px-5 py-20 md:px-12">
@@ -225,7 +226,6 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
     </div>
   </div>
 </section>
-
 <footer class="border-t border-line bg-forest-deep px-5 py-12 md:px-10">
   <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
     <div><p class="kicker">A cultural mission</p><p class="mt-3 font-display text-4xl text-cream">Annashakti</p><p class="mt-2 font-display text-xl italic text-gold">The plate that trains with you.</p></div>
@@ -250,6 +250,13 @@ const live=new IntersectionObserver((entries)=>{
 },{threshold:0.28, rootMargin:"0px 0px -10% 0px"});
 beats.forEach((beat)=>live.observe(beat));
 if(beats[0]) beats[0].classList.add("is-in");
+const missionToggle=document.getElementById("mission-toggle");
+const missionLetter=document.getElementById("mission-letter");
+const setMissionOpen=(open)=>{
+  missionToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  missionLetter.classList.toggle("open", open);
+};
+missionToggle.addEventListener("click",()=> setMissionOpen(missionToggle.getAttribute("aria-expanded")!=="true"));
 const aliases={mission:"unlock",aspire:"possible"};
 const scrollToId=(id)=>{
   const node=document.getElementById(aliases[id]||id);
@@ -264,6 +271,7 @@ document.querySelectorAll('a[href^="/#"]').forEach((link)=>{
   });
 });
 if(aliases[location.hash.slice(1)]) scrollToId(location.hash.slice(1));
+if(location.hash==="#mission") setMissionOpen(true);
 const form=document.getElementById("enroll-form");
 form.addEventListener("submit", async (e)=>{
   e.preventDefault();
