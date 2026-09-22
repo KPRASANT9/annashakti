@@ -17,12 +17,11 @@ section.gold-rail,section#enroll,footer{scroll-snap-align:start}
 section.gold-rail,section#enroll{min-height:100svh}
 .statement-copy{opacity:0;transform:translate3d(0,28px,0);filter:blur(6px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1),filter .9s ease}
 section.is-in .statement-copy{opacity:1;transform:none;filter:none}
-.site-bar{position:fixed;inset:0 0 auto 0;z-index:200;display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.7rem 1rem;background:rgba(12,20,16,.82);border-bottom:1px solid rgba(201,163,90,.28);backdrop-filter:blur(10px)}
-.site-bar a.brand{font-family:"Cormorant Garamond",serif;color:#f3ead8;text-decoration:none;font-size:1.28rem;white-space:nowrap}
-.site-bar nav{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .62rem;justify-content:flex-end}
-.site-bar nav a{color:#f3ead8;text-decoration:none;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
-.site-bar nav a:hover{color:#c9a35a}
-.menu-btn{display:none;flex:none;width:2.5rem;height:2.5rem;border-radius:999px;border:1px solid #c9a35a;background:#0c1410;color:#f3ead8;align-items:center;justify-content:center;cursor:pointer}
+.site-bar{position:fixed;inset:0 0 auto 0;z-index:200;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.25rem;background:rgba(12,20,16,.82);border-bottom:1px solid rgba(201,163,90,.28);backdrop-filter:blur(10px)}
+.site-bar a.brand{text-decoration:none;white-space:nowrap}
+.site-bar nav{display:flex;flex-wrap:nowrap;align-items:center;justify-content:flex-end}
+.site-bar nav a{text-decoration:none;white-space:nowrap}
+.menu-btn{display:none;flex:none;width:2.75rem;height:2.75rem;border-radius:999px;border:1px solid rgba(201,163,90,.45);background:transparent;color:#f3ead8;align-items:center;justify-content:center;cursor:pointer}
 .menu-btn span,.menu-btn span:before,.menu-btn span:after{display:block;width:14px;height:1.5px;background:#f3ead8;position:relative}
 .menu-btn span:before,.menu-btn span:after{content:"";position:absolute;left:0}
 .menu-btn span:before{top:-5px}
@@ -30,7 +29,7 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
 .menu-btn[aria-expanded="true"] span{background:transparent}
 .menu-btn[aria-expanded="true"] span:before{top:0;transform:rotate(45deg)}
 .menu-btn[aria-expanded="true"] span:after{top:0;transform:rotate(-45deg)}
-#catalog{position:fixed;top:3.55rem;right:.75rem;left:auto;bottom:auto;z-index:190;width:min(14.5rem,calc(100vw - 1.5rem));max-height:min(28rem,calc(100svh - 5rem));background:rgba(12,20,16,.96);border:1px solid rgba(201,163,90,.35);border-radius:.65rem;box-shadow:0 12px 32px rgba(0,0,0,.35);transform:translateY(-6px);opacity:0;transition:transform .25s ease,opacity .25s ease,visibility .25s ease;overflow:auto;padding:.35rem .95rem;pointer-events:none;visibility:hidden}
+#catalog{position:fixed;top:4.4rem;right:.75rem;left:auto;bottom:auto;z-index:190;width:min(14.5rem,calc(100vw - 1.5rem));max-height:min(28rem,calc(100svh - 5rem));background:rgba(12,20,16,.96);border:1px solid rgba(201,163,90,.35);border-radius:.65rem;box-shadow:0 12px 32px rgba(0,0,0,.35);transform:translateY(-6px);opacity:0;transition:transform .25s ease,opacity .25s ease,visibility .25s ease;overflow:auto;padding:.35rem .95rem;pointer-events:none;visibility:hidden}
 #catalog.open{transform:none;opacity:1;pointer-events:auto;visibility:visible}
 .cat-list a{display:block;padding:.5rem 0;border-bottom:1px solid rgba(201,163,90,.18);text-decoration:none;color:#f3ead8;font-family:"Cormorant Garamond",serif;font-size:1.15rem}
 .cat-list a:last-child{border-bottom:0}
@@ -48,6 +47,9 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
 @media (min-width:721px){
   #catalog,#catalog.open{display:none !important;visibility:hidden;pointer-events:none}
 }
+@media (min-width:768px){
+  .site-bar{padding:1rem 2.5rem}
+}
 #unlock .unlock-veil{background:linear-gradient(90deg,rgba(12,20,16,.92) 0%,rgba(12,20,16,.62) 38%,rgba(12,20,16,.22) 72%,rgba(12,20,16,.08) 100%),linear-gradient(0deg,rgba(12,20,16,.72) 0%,rgba(12,20,16,.12) 42%,transparent 70%)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-snap-type:none}
@@ -58,16 +60,16 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
 </head>
 <body class="bg-ink text-cream font-sans">
 <header class="site-bar">
-  <a class="brand" href="/">Annashakti</a>
-  <nav aria-label="Kitchen toolbar">
-    <a href="/#achieve">Achieve</a>
-    <a href="/#unlock">Unlock</a>
-    <a href="/#possible">Possible</a>
-    <a href="/#harness">Harness</a>
-    <a href="/#impact">Impact</a>
-    <a href="/#scale">Scale</a>
-    <a href="/#build">Build</a>
-    <a href="/#enroll">Enter</a>
+  <a class="brand font-display text-xl tracking-wide text-cream md:text-2xl" href="/">Annashakti</a>
+  <nav class="items-center gap-5 xl:gap-7" aria-label="Kitchen toolbar">
+    <a href="/#achieve" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Achieve</a>
+    <a href="/#unlock" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Unlock</a>
+    <a href="/#possible" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Possible</a>
+    <a href="/#harness" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Harness</a>
+    <a href="/#impact" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Impact</a>
+    <a href="/#scale" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Scale</a>
+    <a href="/#build" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Build</a>
+    <a href="/#enroll" class="text-xs tracking-widest uppercase text-cream-dim hover:text-gold">Enter</a>
   </nav>
   <button type="button" class="menu-btn" id="catalog-open" aria-label="Catalog" aria-controls="catalog" aria-expanded="false"><span></span></button>
 </header>
