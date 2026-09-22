@@ -17,10 +17,10 @@ section.gold-rail,section#enroll,footer{scroll-snap-align:start}
 section.gold-rail,section#enroll{min-height:100svh}
 .statement-copy{opacity:0;transform:translate3d(0,28px,0);filter:blur(6px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1),filter .9s ease}
 section.is-in .statement-copy{opacity:1;transform:none;filter:none}
-.site-bar{position:fixed;inset:0 0 auto 0;z-index:200;display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.7rem 1rem;background:rgba(12,20,16,.82);border-bottom:1px solid rgba(201,163,90,.28);backdrop-filter:blur(10px)}
-.site-bar a.brand{font-family:"Cormorant Garamond",serif;color:#f3ead8;text-decoration:none;font-size:1.35rem;white-space:nowrap}
-.site-bar nav{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem .85rem;justify-content:flex-end}
-.site-bar nav a{color:#f3ead8;text-decoration:none;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.site-bar{position:fixed;inset:0 0 auto 0;z-index:200;display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.7rem 1rem;background:rgba(12,20,16,.82);border-bottom:1px solid rgba(201,163,90,.28);backdrop-filter:blur(10px)}
+.site-bar a.brand{font-family:"Cormorant Garamond",serif;color:#f3ead8;text-decoration:none;font-size:1.28rem;white-space:nowrap}
+.site-bar nav{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .62rem;justify-content:flex-end}
+.site-bar nav a{color:#f3ead8;text-decoration:none;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
 .site-bar nav a:hover{color:#c9a35a}
 .menu-btn{display:none;flex:none;width:2.5rem;height:2.5rem;border-radius:999px;border:1px solid #c9a35a;background:#0c1410;color:#f3ead8;align-items:center;justify-content:center;cursor:pointer}
 .menu-btn span,.menu-btn span:before,.menu-btn span:after{display:block;width:14px;height:1.5px;background:#f3ead8;position:relative}
@@ -30,9 +30,9 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
 .menu-btn[aria-expanded="true"] span{background:transparent}
 .menu-btn[aria-expanded="true"] span:before{top:0;transform:rotate(45deg)}
 .menu-btn[aria-expanded="true"] span:after{top:0;transform:rotate(-45deg)}
-#catalog{position:fixed;top:3.55rem;right:.75rem;left:auto;bottom:auto;z-index:190;width:min(14.5rem,calc(100vw - 1.5rem));max-height:min(24rem,calc(100svh - 5rem));background:rgba(12,20,16,.96);border:1px solid rgba(201,163,90,.35);border-radius:.65rem;box-shadow:0 12px 32px rgba(0,0,0,.35);transform:translateY(-6px);opacity:0;transition:transform .25s ease,opacity .25s ease,visibility .25s ease;overflow:auto;padding:.35rem .95rem;pointer-events:none;visibility:hidden}
+#catalog{position:fixed;top:3.55rem;right:.75rem;left:auto;bottom:auto;z-index:190;width:min(14.5rem,calc(100vw - 1.5rem));max-height:min(28rem,calc(100svh - 5rem));background:rgba(12,20,16,.96);border:1px solid rgba(201,163,90,.35);border-radius:.65rem;box-shadow:0 12px 32px rgba(0,0,0,.35);transform:translateY(-6px);opacity:0;transition:transform .25s ease,opacity .25s ease,visibility .25s ease;overflow:auto;padding:.35rem .95rem;pointer-events:none;visibility:hidden}
 #catalog.open{transform:none;opacity:1;pointer-events:auto;visibility:visible}
-.cat-list a{display:block;padding:.55rem 0;border-bottom:1px solid rgba(201,163,90,.18);text-decoration:none;color:#f3ead8;font-family:"Cormorant Garamond",serif;font-size:1.2rem}
+.cat-list a{display:block;padding:.5rem 0;border-bottom:1px solid rgba(201,163,90,.18);text-decoration:none;color:#f3ead8;font-family:"Cormorant Garamond",serif;font-size:1.15rem}
 .cat-list a:last-child{border-bottom:0}
 .mission-letter p{max-width:40rem;color:rgba(243,234,216,.82);font-size:1.05rem;line-height:1.65}
 .mission-letter p + p{margin-top:1.05rem}
@@ -55,11 +55,12 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
   <a class="brand" href="/">Annashakti</a>
   <nav aria-label="Kitchen toolbar">
     <a href="/#achieve">Achieve</a>
-    <a href="/#aspire">Aspire</a>
-    <a href="/#impact">Impact</a>
-    <a href="/#mission">Mission</a>
+    <a href="/#unlock">Unlock</a>
+    <a href="/#possible">Possible</a>
     <a href="/#harness">Harness</a>
+    <a href="/#impact">Impact</a>
     <a href="/#scale">Scale</a>
+    <a href="/#build">Build</a>
     <a href="/#enroll">Enter</a>
   </nav>
   <button type="button" class="menu-btn" id="catalog-open" aria-label="Catalog" aria-controls="catalog" aria-expanded="false"><span></span></button>
@@ -67,76 +68,60 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
 <aside id="catalog" role="dialog" aria-label="Catalog">
   <nav class="cat-list">
     <a href="/#achieve">Achieve</a>
-    <a href="/#aspire">Aspire</a>
-    <a href="/#impact">Impact</a>
-    <a href="/#mission">Mission</a>
+    <a href="/#unlock">Unlock</a>
+    <a href="/#possible">Possible</a>
     <a href="/#harness">Harness</a>
+    <a href="/#impact">Impact</a>
     <a href="/#scale">Scale</a>
+    <a href="/#build">Build</a>
     <a href="/#enroll">Enter</a>
   </nav>
 </aside>
+
 <section id="achieve" class="gold-rail grain relative min-h-svh overflow-hidden">
   <video class="absolute inset-0 size-full object-cover" autoplay muted loop playsinline poster="https://star-iris-sky-kind.grok.me/images/hero-hands.jpg"><source src="https://star-iris-sky-kind.grok.me/video/hero.mp4" type="video/mp4"/></video>
   <div class="veil-left absolute inset-0"></div><div class="veil-bottom absolute inset-0"></div>
   <div class="relative z-10 flex min-h-svh flex-col justify-end px-5 pb-16 pt-28 md:px-12 md:pb-24">
     <div class="statement-copy max-w-3xl">
-      <p class="kicker">What this does</p>
+      <p class="kicker">The work</p>
       <h1 class="mt-6 font-display text-statement text-cream">Putting the Indian body back together.</h1>
       <p class="mt-8 font-display text-2xl text-cream md:text-3xl">The gym has you for an hour.<span class="mt-1 block italic text-gold">The kitchen has the rest.</span></p>
       <p class="mt-10 font-display text-stat text-gold">1 : 23</p>
       <p class="mt-2 text-xs tracking-[0.22em] uppercase text-cream-dim">hours under the bar · hours on the plate</p>
-      <a href="/#aspire" class="mt-12 inline-block text-xs tracking-[0.22em] uppercase text-gold">Who you become →</a>
+      <a href="/#unlock" class="mt-12 inline-block text-xs tracking-[0.22em] uppercase text-gold">To unlock human potential →</a>
     </div>
   </div>
 </section>
-<section id="aspire" class="gold-rail relative min-h-svh">
-  <div class="absolute inset-0 overflow-hidden"><img src="https://star-iris-sky-kind.grok.me/images/compass-rest.jpg" alt="Rest after the work" class="absolute inset-0 size-full object-cover"/><div class="veil-bottom absolute inset-0"></div><div class="veil-left absolute inset-0"></div></div>
-  <div class="relative z-10 flex min-h-svh flex-col px-5 pt-28 md:px-12 justify-end pb-16 md:pb-24">
-    <div class="statement-copy max-w-3xl">
-      <p class="kicker">Who you become</p>
-      <h2 class="mt-5 font-display text-statement text-cream">Fed. Trained. Clear.</h2>
-      <p class="mt-5 font-display text-2xl italic text-gold md:text-4xl">A person who stays clear when the day is heavy.</p>
-      <p class="mt-12 text-xs tracking-[0.28em] uppercase text-cream-dim">I Fed · II Trained · III Clear</p>
-      <a href="/#impact" class="mt-10 inline-block text-xs tracking-[0.22em] uppercase text-gold">What it costs if we don’t →</a>
-    </div>
-  </div>
-</section>
-<section id="impact" class="gold-rail relative min-h-svh">
-  <div class="absolute inset-0 overflow-hidden"><img src="https://star-iris-sky-kind.grok.me/images/bill-ward.jpg" alt="A hospital ward" class="absolute inset-0 size-full object-cover"/><div class="veil-bottom absolute inset-0"></div><div class="veil-left absolute inset-0"></div></div>
-  <div class="relative z-10 flex min-h-svh flex-col px-5 pt-28 md:px-12 justify-end pb-16 md:pb-24">
-    <div class="statement-copy max-w-3xl">
-      <p class="kicker">What it costs if we don’t</p>
-      <h2 class="mt-5 font-display text-statement text-cream">The split was already a bill.</h2>
-      <p class="mt-5 font-display text-2xl italic text-gold md:text-3xl">The kitchen was the cheaper hospital.</p>
-      <div class="mt-12 grid max-w-3xl gap-8 sm:grid-cols-3">
-        <figure><p class="font-display text-4xl text-cream md:text-5xl">1 : 23</p><p class="mt-2 text-xs text-cream-dim">hour under the bar · hours on the plate</p></figure>
-        <figure><p class="font-display text-4xl text-cream md:text-5xl">1 : 18</p><p class="mt-2 text-xs text-cream-dim">one private night · months of a kitchen</p></figure>
-        <figure><p class="font-display text-4xl text-cream md:text-5xl">33 → 4</p><p class="mt-2 text-xs text-cream-dim">kg millet on the Indian plate</p></figure>
-      </div>
-      <a href="/#mission" class="mt-10 inline-block text-xs tracking-[0.22em] uppercase text-gold">The mission →</a>
-    </div>
-  </div>
-</section>
-<section id="mission" class="gold-rail bg-forest">
+
+<section id="unlock" class="gold-rail bg-forest">
   <div class="relative z-10 flex min-h-svh flex-col justify-center px-5 py-24 md:px-12">
     <div class="statement-copy max-w-4xl">
       <p class="kicker">The mission</p>
-      <h2 class="mt-5 font-display text-statement text-cream">Unlock the peak. Keep the plate.</h2>
-      <p class="mt-4 font-display text-2xl italic text-gold md:text-3xl">An internal compass for a life that stays clear under pressure.</p>
-      <ul class="mt-10 grid max-w-3xl gap-x-10 gap-y-6 sm:grid-cols-3">
-        <li><p class="text-[0.65rem] tracking-[0.22em] uppercase text-gold">The body</p><p class="mt-2 font-display text-xl text-cream">Fitness. Nourishment. Resilience.</p></li>
-        <li><p class="text-[0.65rem] tracking-[0.22em] uppercase text-gold">The compass</p><p class="mt-2 font-display text-xl text-cream">Clarity. Calm. Purpose.</p></li>
-        <li><p class="text-[0.65rem] tracking-[0.22em] uppercase text-gold">The system</p><p class="mt-2 font-display text-xl text-cream">Digital. Logistics. Time returned.</p></li>
-      </ul>
+      <h2 class="mt-5 font-display text-statement text-cream">To unlock human potential.</h2>
+      <p class="mt-4 font-display text-2xl italic text-gold md:text-3xl">A deeply purposeful life. Clarity and calm under pressure.</p>
       <div class="mission-letter mt-12 border-l border-gold/35 pl-5">
         <p>At Annashakti, our mission is to unlock the peak of human potential, empowering every individual to lead a deeply purposeful and impactful life. We create advanced, science-backed systems that optimize holistic well-being — integrating physical fitness, precise nourishment, and mental resilience.</p>
         <p>By equipping people with the tools to navigate life’s complex challenges with absolute clarity and calm under pressure, we build an internal compass for conscious, fully realized living.</p>
         <p>To make this transformation truly universal, we back our human-centric insights with a powerful digital framework, smart logistics, and a seamless supply chain. We eliminate the daily friction of sustainable living, dramatically increasing productivity and returning time back to individuals so they can freely pursue their true vocations.</p>
       </div>
-      <a href="/#harness" class="mt-12 inline-block text-xs tracking-[0.22em] uppercase text-gold">Who holds it →</a>
+      <a href="/#possible" class="mt-12 inline-block text-xs tracking-[0.22em] uppercase text-gold">What becomes possible →</a>
     </div>
   </div>
 </section>
+
+<section id="possible" class="gold-rail relative min-h-svh">
+  <div class="absolute inset-0 overflow-hidden"><img src="https://star-iris-sky-kind.grok.me/images/compass-rest.jpg" alt="Rest after the work" class="absolute inset-0 size-full object-cover"/><div class="veil-bottom absolute inset-0"></div><div class="veil-left absolute inset-0"></div></div>
+  <div class="relative z-10 flex min-h-svh flex-col px-5 pt-28 md:px-12 justify-end pb-16 md:pb-24">
+    <div class="statement-copy max-w-3xl">
+      <p class="kicker">What becomes possible</p>
+      <h2 class="mt-5 font-display text-statement text-cream">Fed. Trained. Clear.</h2>
+      <p class="mt-5 font-display text-2xl italic text-gold md:text-4xl">A person who stays clear when the day is heavy.</p>
+      <p class="mt-12 text-xs tracking-[0.28em] uppercase text-cream-dim">I Fed · II Trained · III Clear</p>
+      <a href="/#harness" class="mt-10 inline-block text-xs tracking-[0.22em] uppercase text-gold">Four hands. One compass →</a>
+    </div>
+  </div>
+</section>
+
 <section id="harness" class="gold-rail relative min-h-svh">
   <div class="absolute inset-0 overflow-hidden"><img src="https://star-iris-sky-kind.grok.me/images/bond-athlete.jpg" alt="A trained body under the bar" class="absolute inset-0 size-full object-cover"/><div class="veil-bottom absolute inset-0"></div><div class="veil-left absolute inset-0"></div></div>
   <div class="relative z-10 flex min-h-svh flex-col px-5 pt-28 md:px-12 justify-center pb-16">
@@ -151,10 +136,28 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
         <li><p class="font-display text-lg text-cream md:text-xl">Tech veterans</p><p class="mt-1 text-sm text-cream-dim">Handling the chaos with ease — so the plate is not an accident.</p></li>
       </ul>
       <p class="mt-10 font-display text-3xl text-gold md:text-4xl">Lift → Plate → Sleep</p>
-      <a href="/#scale" class="mt-10 inline-block text-xs tracking-[0.22em] uppercase text-gold">How far this goes →</a>
+      <a href="/#impact" class="mt-10 inline-block text-xs tracking-[0.22em] uppercase text-gold">The split was already a bill →</a>
     </div>
   </div>
 </section>
+
+<section id="impact" class="gold-rail relative min-h-svh">
+  <div class="absolute inset-0 overflow-hidden"><img src="https://star-iris-sky-kind.grok.me/images/bill-ward.jpg" alt="A hospital ward" class="absolute inset-0 size-full object-cover"/><div class="veil-bottom absolute inset-0"></div><div class="veil-left absolute inset-0"></div></div>
+  <div class="relative z-10 flex min-h-svh flex-col px-5 pt-28 md:px-12 justify-end pb-16 md:pb-24">
+    <div class="statement-copy max-w-3xl">
+      <p class="kicker">What it costs if we don’t</p>
+      <h2 class="mt-5 font-display text-statement text-cream">The split was already a bill.</h2>
+      <p class="mt-5 font-display text-2xl italic text-gold md:text-3xl">The kitchen was the cheaper hospital.</p>
+      <div class="mt-12 grid max-w-3xl gap-8 sm:grid-cols-3">
+        <figure><p class="font-display text-4xl text-cream md:text-5xl">1 : 23</p><p class="mt-2 text-xs text-cream-dim">hour under the bar · hours on the plate</p></figure>
+        <figure><p class="font-display text-4xl text-cream md:text-5xl">1 : 18</p><p class="mt-2 text-xs text-cream-dim">one private night · months of a kitchen</p></figure>
+        <figure><p class="font-display text-4xl text-cream md:text-5xl">33 → 4</p><p class="mt-2 text-xs text-cream-dim">kg millet on the Indian plate</p></figure>
+      </div>
+      <a href="/#scale" class="mt-10 inline-block text-xs tracking-[0.22em] uppercase text-gold">A thousand kitchens →</a>
+    </div>
+  </div>
+</section>
+
 <section id="scale" class="gold-rail relative min-h-svh">
   <div class="absolute inset-0 overflow-hidden"><img src="https://star-iris-sky-kind.grok.me/images/street-cook.jpg" alt="A neighbourhood cook" class="absolute inset-0 size-full object-cover"/><div class="veil-bottom absolute inset-0"></div><div class="veil-left absolute inset-0"></div></div>
   <div class="relative z-10 flex min-h-svh flex-col px-5 pt-28 md:px-12 justify-end pb-16 md:pb-24">
@@ -163,17 +166,24 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
       <h2 class="mt-5 font-display text-statement text-cream">A thousand kitchens.</h2>
       <p class="mt-4 font-display text-3xl italic text-gold md:text-5xl">Not one factory.</p>
       <p class="mt-10 font-display text-2xl text-cream md:text-3xl">Hyderabad first.<span class="mt-2 block text-cream-dim">One cook. A street. A culture.</span></p>
-      <a href="/#enroll" class="mt-10 inline-block text-xs tracking-[0.22em] uppercase text-gold">How you enter →</a>
+      <a href="/#build" class="mt-10 inline-block text-xs tracking-[0.22em] uppercase text-gold">What we are building →</a>
     </div>
   </div>
 </section>
-<section id="enroll" class="gold-rail bg-ink">
-  <div class="grid lg:grid-cols-2">
-    <div class="flex flex-col justify-center px-5 py-20 md:px-12">
-      <p class="kicker">How you enter</p>
-      <h2 class="mt-5 font-display text-statement text-cream">One letter. The first hundred.</h2>
-      <p class="mt-4 max-w-md text-cream-dim">Walk the six assets of the mission. Leave a name. We keep the place, and we write back.</p>
-      <ol class="mt-10 border-l border-gold/35 pl-5">
+
+<section id="build" class="gold-rail bg-ink">
+  <div class="relative z-10 flex min-h-svh flex-col justify-center px-5 py-24 md:px-12">
+    <div class="statement-copy max-w-4xl">
+      <p class="kicker">What we are building</p>
+      <h2 class="mt-5 font-display text-statement text-cream">Science on the plate. A spine under the day.</h2>
+      <p class="mt-4 max-w-2xl font-display text-2xl italic text-gold md:text-3xl">Digital framework. Smart logistics. A supply chain that returns time.</p>
+      <ul class="mt-12 grid max-w-4xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <li><p class="text-[0.65rem] tracking-[0.22em] uppercase text-gold">The craft</p><p class="mt-2 font-display text-xl text-cream">Soak. Sprout. Ferment. Tadka.</p></li>
+        <li><p class="text-[0.65rem] tracking-[0.22em] uppercase text-gold">The compass</p><p class="mt-2 font-display text-xl text-cream">Lift → Plate → Sleep</p></li>
+        <li><p class="text-[0.65rem] tracking-[0.22em] uppercase text-gold">The spine</p><p class="mt-2 font-display text-xl text-cream">Digital. Logistics. Supply.</p></li>
+        <li><p class="text-[0.65rem] tracking-[0.22em] uppercase text-gold">The street</p><p class="mt-2 font-display text-xl text-cream">One cook. Homes in their own tongue.</p></li>
+      </ul>
+      <ol class="mt-14 border-l border-gold/35 pl-5 max-w-xl">
         <li class="relative pb-5"><span class="absolute top-2 -left-[1.47rem] size-1.5 rounded-full bg-gold"></span><p class="text-[0.65rem] tracking-[0.22em] uppercase text-gold">01 · The Bond</p><p class="mt-0.5 font-display text-lg text-cream md:text-xl">1 : 23 — gym hour, plate hours</p></li>
         <li class="relative pb-5"><span class="absolute top-2 -left-[1.47rem] size-1.5 rounded-full bg-gold"></span><p class="text-[0.65rem] tracking-[0.22em] uppercase text-gold">02 · The Bill</p><p class="mt-0.5 font-display text-lg text-cream md:text-xl">1 : 18 — a ward night, eighteen months of food</p></li>
         <li class="relative pb-5"><span class="absolute top-2 -left-[1.47rem] size-1.5 rounded-full bg-gold"></span><p class="text-[0.65rem] tracking-[0.22em] uppercase text-gold">03 · The Craft</p><p class="mt-0.5 font-display text-lg text-cream md:text-xl">Soak. Sprout. Ferment. Tadka.</p></li>
@@ -181,6 +191,17 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
         <li class="relative pb-5"><span class="absolute top-2 -left-[1.47rem] size-1.5 rounded-full bg-gold"></span><p class="text-[0.65rem] tracking-[0.22em] uppercase text-gold">05 · The Compass</p><p class="mt-0.5 font-display text-lg text-cream md:text-xl">Lift → Plate → Sleep</p></li>
         <li class="relative pb-5"><span class="absolute top-2 -left-[1.47rem] size-1.5 rounded-full bg-gold"></span><p class="text-[0.65rem] tracking-[0.22em] uppercase text-gold">06 · The Person</p><p class="mt-0.5 font-display text-lg text-cream md:text-xl">First 100 kitchens. Hyderabad.</p></li>
       </ol>
+      <a href="/#enroll" class="mt-12 inline-block text-xs tracking-[0.22em] uppercase text-gold">One letter. The first hundred →</a>
+    </div>
+  </div>
+</section>
+
+<section id="enroll" class="gold-rail bg-ink">
+  <div class="grid lg:grid-cols-2">
+    <div class="flex flex-col justify-center px-5 py-20 md:px-12">
+      <p class="kicker">How you enter</p>
+      <h2 class="mt-5 font-display text-statement text-cream">One letter. The first hundred.</h2>
+      <p class="mt-4 max-w-md text-cream-dim">Leave a name. We keep the place, and we write back.</p>
     </div>
     <div class="flex flex-col justify-center border-t border-line bg-forest px-5 py-16 md:px-12 lg:border-t-0 lg:border-l">
       <p class="kicker">Leave a name</p>
@@ -204,10 +225,11 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
     </div>
   </div>
 </section>
+
 <footer class="border-t border-line bg-forest-deep px-5 py-12 md:px-10">
   <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
     <div><p class="kicker">A cultural mission</p><p class="mt-3 font-display text-4xl text-cream">Annashakti</p><p class="mt-2 font-display text-xl italic text-gold">The plate that trains with you.</p></div>
-    <div class="flex flex-col gap-3 md:items-end"><a href="/#mission" class="text-xs tracking-[0.22em] uppercase text-gold">The mission</a><a href="/#enroll" class="text-xs tracking-[0.22em] uppercase text-gold">The first hundred</a><a href="/kitchen" class="text-xs tracking-[0.22em] uppercase text-muted">Kitchen book</a></div>
+    <div class="flex flex-col gap-3 md:items-end"><a href="/#unlock" class="text-xs tracking-[0.22em] uppercase text-gold">The mission</a><a href="/#build" class="text-xs tracking-[0.22em] uppercase text-gold">What we are building</a><a href="/#enroll" class="text-xs tracking-[0.22em] uppercase text-gold">The first hundred</a><a href="/kitchen" class="text-xs tracking-[0.22em] uppercase text-muted">Kitchen book</a></div>
   </div>
 </footer>
 <script>
@@ -228,15 +250,20 @@ const live=new IntersectionObserver((entries)=>{
 },{threshold:0.28, rootMargin:"0px 0px -10% 0px"});
 beats.forEach((beat)=>live.observe(beat));
 if(beats[0]) beats[0].classList.add("is-in");
+const aliases={mission:"unlock",aspire:"possible"};
+const scrollToId=(id)=>{
+  const node=document.getElementById(aliases[id]||id);
+  if(node) node.scrollIntoView({behavior:"smooth", block:"start"});
+};
 document.querySelectorAll('a[href^="/#"]').forEach((link)=>{
   link.addEventListener("click",(event)=>{
     const id=link.getAttribute("href").slice(2);
-    const node=document.getElementById(id);
-    if(!node) return;
+    if(!document.getElementById(aliases[id]||id)) return;
     event.preventDefault();
-    node.scrollIntoView({behavior:"smooth", block:"start"});
+    scrollToId(id);
   });
 });
+if(aliases[location.hash.slice(1)]) scrollToId(location.hash.slice(1));
 const form=document.getElementById("enroll-form");
 form.addEventListener("submit", async (e)=>{
   e.preventDefault();
