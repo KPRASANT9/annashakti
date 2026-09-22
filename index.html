@@ -48,6 +48,7 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
 @media (min-width:721px){
   #catalog,#catalog.open{display:none !important;visibility:hidden;pointer-events:none}
 }
+#unlock .unlock-veil{background:linear-gradient(90deg,rgba(12,20,16,.92) 0%,rgba(12,20,16,.62) 38%,rgba(12,20,16,.22) 72%,rgba(12,20,16,.08) 100%),linear-gradient(0deg,rgba(12,20,16,.72) 0%,rgba(12,20,16,.12) 42%,transparent 70%)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-snap-type:none}
   .statement-copy{opacity:1;transform:none;filter:none;transition:none}
@@ -96,12 +97,16 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
     </div>
   </div>
 </section>
-<section id="unlock" class="gold-rail bg-forest">
-  <div class="relative z-10 flex min-h-svh flex-col justify-center px-5 py-24 md:px-12">
-    <div class="statement-copy max-w-4xl">
+<section id="unlock" class="gold-rail relative min-h-svh">
+  <div class="absolute inset-0 overflow-hidden">
+    <img src="/images/unlock-soak.jpg" alt="Millet soaking in brass — the seed opening" class="absolute inset-0 size-full object-cover object-[70%_center]"/>
+    <div class="unlock-veil absolute inset-0"></div>
+  </div>
+  <div class="relative z-10 flex min-h-svh flex-col justify-end px-5 pb-16 pt-28 md:px-12 md:pb-24">
+    <div class="statement-copy max-w-3xl">
       <p class="kicker">The mission</p>
       <h2 class="mt-5 font-display text-statement text-cream">To unlock human potential.</h2>
-      <p class="mt-8 max-w-3xl font-display text-2xl text-cream md:text-3xl">We build science-backed systems that bring physical fitness, precise nourishment, and mental resilience into one way of living — giving people the clarity, capacity, and time to pursue what matters most.</p>
+      <p class="mt-8 max-w-2xl font-display text-2xl text-cream md:text-3xl">We build science-backed systems that bring physical fitness, precise nourishment, and mental resilience into one way of living — giving people the clarity, capacity, and time to pursue what matters most.</p>
       <button type="button" id="mission-toggle" class="mt-12 inline-block text-xs tracking-[0.22em] uppercase text-gold" aria-expanded="false" aria-controls="mission-letter">
         <span class="open-label">Read the full mission →</span>
         <span class="close-label">Close the letter</span>
