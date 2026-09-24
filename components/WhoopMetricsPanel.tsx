@@ -2,6 +2,58 @@
 
 import { useEffect, useState } from "react";
 
+const LABELS: Record<string, string> = {
+  score: "Recovery score",
+  restingHeartRate: "Resting HR",
+  hrvRmssdMilli: "HRV (RMSSD)",
+  spo2Percent: "SpO₂",
+  skinTempCelsius: "Skin temp",
+  calibrating: "Calibrating",
+  strain: "Strain",
+  kilojoule: "Energy",
+  averageHeartRate: "Avg HR",
+  maxHeartRate: "Max HR",
+  start: "Start",
+  end: "End",
+  performancePercent: "Sleep performance",
+  consistencyPercent: "Consistency",
+  efficiencyPercent: "Efficiency",
+  respiratoryRate: "Respiratory rate",
+  totalSleepHours: "Total sleep",
+  remHours: "REM",
+  slowWaveHours: "Slow-wave",
+  lightHours: "Light",
+  disturbanceCount: "Disturbances",
+  sleepDebtHours: "Sleep debt",
+};
+
+function labelFor(key: string) {
+  return LABELS[key] ?? key.replace(/([A-Z])/g, " $1").replace(/^./, (c) => c.toUpperCase());
+}
+
+function formatValue(key: string, v: number | string | boolean | null | undefined) {
+  if (v == null) return "—";
+  if (typeof v === "boolean") return v ? "yes" : "no";
+  if (typeof v === "number") {
+    if (key.toLowerCase().includes("percent")) return `${Number(v.toFixed(1))}%`;
+    if (key.toLowerCase().includes("hour")) return `${Number(v.toFixed(1))} h`;
+    if (key === "hrvRmssdMilli") return `${Math.round(v)} ms`;
+    if (key === "skinTempCelsius") return `${Number(v.toFixed(1))} °C`;
+    if (key === "kilojoule") return `${Math.round(v)} kJ`;
+    if (key.includes("HeartRate") || key === "restingHeartRate") return `${Math.round(v)} bpm`;
+    if (Number.isInteger(v)) return String(v);
+    return Number(v.toFixed(2)).toString();
+  }
+  if (typeof v === "string" && v.includes("T") && v.endsWith("Z")) {
+    try {
+      return new Date(v).toLocaleString();
+    } catch {
+      return v;
+    }
+  }
+  return String(v);
+}
+
 type MetricsPayload = {
   ok: boolean;
   mode: string;
@@ -76,9 +128,9 @@ export function WhoopMetricsPanel() {
       <div className="metric-grid" style={{ margin: "0.75rem 0 1.5rem" }}>
         {Object.entries(b.recovery).map(([k, v]) => (
           <div className="metric" key={k}>
-            <div className="label">{k}</div>
+            <div className="label">{labelFor(k)}</div>
             <div className="value" style={{ fontSize: "1.25rem" }}>
-              {String(v ?? "—")}
+              {formatValue(k, v)}
             </div>
           </div>
         ))}
@@ -88,9 +140,9 @@ export function WhoopMetricsPanel() {
       <div className="metric-grid" style={{ margin: "0.75rem 0 1.5rem" }}>
         {Object.entries(b.cycle).map(([k, v]) => (
           <div className="metric" key={k}>
-            <div className="label">{k}</div>
+            <div className="label">{labelFor(k)}</div>
             <div className="value" style={{ fontSize: "1.1rem" }}>
-              {typeof v === "number" ? v.toFixed?.(2) ?? v : String(v ?? "—")}
+              {formatValue(k, v)}
             </div>
           </div>
         ))}
@@ -100,9 +152,9 @@ export function WhoopMetricsPanel() {
       <div className="metric-grid" style={{ margin: "0.75rem 0 1.5rem" }}>
         {Object.entries(b.sleep).map(([k, v]) => (
           <div className="metric" key={k}>
-            <div className="label">{k}</div>
+            <div className="label">{labelFor(k)}</div>
             <div className="value" style={{ fontSize: "1.1rem" }}>
-              {typeof v === "number" ? Number(v.toFixed(2)) : String(v ?? "—")}
+              {formatValue(k, v)}
             </div>
           </div>
         ))}
