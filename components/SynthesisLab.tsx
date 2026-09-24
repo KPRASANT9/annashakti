@@ -148,16 +148,18 @@ export function SynthesisLab() {
           insights truly carry value under load.
         </p>
         <div className="toolbar">
-          <label>
-            Lifecycle hour{" "}
-            <select value={hour} onChange={(e) => setHour(e.target.value)}>
-              {HOURS.map((h) => (
-                <option key={h.value || "now"} value={h.value}>
-                  {h.label}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className="phase-picks" role="group" aria-label="Lifecycle hour">
+            {HOURS.map((h) => (
+              <button
+                key={h.value || "now"}
+                type="button"
+                className={hour === h.value ? "phase-pick active" : "phase-pick"}
+                onClick={() => setHour(h.value)}
+              >
+                {h.label}
+              </button>
+            ))}
+          </div>
           <label>
             <input
               type="checkbox"

@@ -354,6 +354,37 @@ main {
   margin-top: 1.25rem;
 }
 
+.phase-picks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.phase-pick {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+
+.phase-pick:hover {
+  color: var(--ink);
+  border-color: rgba(232, 238, 232, 0.22);
+}
+
+.phase-pick.active {
+  color: #14110a;
+  background: var(--brass);
+  border-color: var(--brass);
+}
+
 .toolbar label {
   display: inline-flex;
   align-items: center;
