@@ -1,13 +1,35 @@
 # Annashakti
 
-Precision nourishment for the Indian body under load — WHOOP biomarkers curated at runtime, synthesized with ICMR-NIN nutrient science, and validated before they guide the plate.
+Putting the Indian body back together. The plate that trains with you.
 
-## What this builds
+The **kitchen homepage** (`/`) is the original six-beat Annashakti site — kept intact.
+Tech surfaces for WHOOP synthesis and probabilistic composition live under `/lab`, `/whoop`, and `/science`.
 
-1. **WHOOP integration** — OAuth + token paths exposing recovery, HRV, RHR, SpO₂, skin temp, cycles/strain, sleep stages, workouts. Demo fixtures when credentials are absent.
-2. **Scientific synthesis** — Biomarker ↔ nutrient links across molecular biology, neurocardiology, chronobiology, epigenetics, exercise physiology, and quantum biology (evidence-graded A–D).
-3. **ICMR-NIN anchors** — Nutrient RDAs and Indian kitchen sources; NIH-ODS / WHO-FAO where needed.
-4. **Validation gate** — Insights scored for evidence floor, governing-body anchor, runtime signal, and daily lifecycle fit.
+## Surfaces
+
+| Path | What |
+|------|------|
+| `/` | Original kitchen homepage (Achieve → Enter) |
+| `/kitchen` | Kitchen book |
+| `/lab` | WHOOP synthesis + Bayesian/frontier plate composition |
+| `/whoop` | Runtime biomarker bundle |
+| `/science` | Domains, evidence grades, ICMR-NIN anchors |
+
+## Probabilistic + frontier composition
+
+1. **Priors** — ICMR-NIN / NIH-ODS / WHO-FAO nutrient foundations  
+2. **Likelihood** — WHOOP biomarker deficits × science-link evidence (A–D temper)  
+3. **Posterior** — Bayesian update with Dirichlet CI95  
+4. **Compose** — softmax sampling of Indian kitchen foods; Monte Carlo picks high-coverage plate  
+5. **Frontier (optional)** — OpenAI / Anthropic may *dictate* candidate foundations & plate JSON; output is re-grounded before precision is accepted  
+
+```bash
+# Local Bayesian (no API key required)
+curl 'http://localhost:3000/api/compose?demo=1&frontier=0&seed=42'
+
+# With frontier dictation when OPENAI_API_KEY or ANTHROPIC_API_KEY is set
+curl 'http://localhost:3000/api/compose?demo=1'
+```
 
 ## Quick start
 
@@ -17,30 +39,11 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open:
-- `/` — brand + thesis
-- `/lab` — synthesis experiment + validation
-- `/whoop` — full runtime metric bundle
-- `/science` — domain links and nutrient anchors
-
 ## WHOOP live mode
 
-1. Create an app at [developer.whoop.com](https://developer.whoop.com)
-2. Set in `.env.local`:
+Set `WHOOP_CLIENT_ID`, `WHOOP_CLIENT_SECRET`, `WHOOP_REDIRECT_URI` (see `.env.example`), then visit `/api/whoop/auth`.
 
-```
-WHOOP_CLIENT_ID=...
-WHOOP_CLIENT_SECRET=...
-WHOOP_REDIRECT_URI=http://localhost:3000/api/whoop/callback
-WHOOP_MODE=live
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
-3. Visit `/api/whoop/auth` or use **Connect WHOOP** in the lab.
-
-Alternatively set `WHOOP_ACCESS_TOKEN` for local experiments without the browser OAuth round-trip.
-
-## Assessment script
+## Assessment
 
 ```bash
 npm run validate

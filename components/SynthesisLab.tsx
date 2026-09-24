@@ -7,20 +7,6 @@ type Assessment = {
   valuePassing: number;
   rejected: number;
   meanValueScore: number;
-  topValidated: Array<{
-    id: string;
-    title: string;
-    valueScore: number;
-    evidence: string;
-    domain: string;
-  }>;
-  rejectedSample: Array<{
-    id: string;
-    title: string;
-    valueScore: number;
-    caveats: string[];
-    failedChecks: string[];
-  }>;
 };
 
 type SynthesisPayload = {
@@ -37,16 +23,9 @@ type SynthesisPayload = {
       localHour: number;
     };
     biomarkers: {
-      recovery: {
-        score: number | null;
-        hrvRmssdMilli: number | null;
-      };
-      cycle: {
-        strain: number | null;
-      };
-      sleep: {
-        performancePercent: number | null;
-      };
+      recovery: { score: number | null; hrvRmssdMilli: number | null };
+      cycle: { strain: number | null };
+      sleep: { performancePercent: number | null };
     };
     loadState: {
       label: string;
@@ -96,6 +75,52 @@ type SynthesisPayload = {
   };
 };
 
+type ComposePayload = {
+  ok: boolean;
+  frontierAvailable: boolean;
+  composition: {
+    method: string;
+    frontierModel: string | null;
+    seed: number;
+    lifecyclePhase: string;
+    foundations: Array<{
+      nutrientId: string;
+      name: string;
+      governingBody: string;
+      rda: number;
+      unit: string;
+      prior: number;
+      likelihood: number;
+      posterior: number;
+      ci95: [number, number];
+      evidenceSupport: string;
+      scientificDomains: string[];
+    }>;
+    composition: Array<{
+      foodId: string;
+      foodName: string;
+      category: string;
+      grams: number;
+      selectionProbability: number;
+      scientificRole: string;
+    }>;
+    precision: {
+      expectedRdaCoverage: number;
+      coverageUncertainty: number;
+      evidenceAnchoredMass: number;
+      precisionScore: number;
+      passesGrounding: boolean;
+      groundingChecks: Array<{
+        id: string;
+        passed: boolean;
+        detail: string;
+      }>;
+    };
+    frontierNarrative: string | null;
+    methodNotes: string[];
+  };
+};
+
 const HOURS = [
   { value: "", label: "Now (local)" },
   { value: "7", label: "07:00 morning" },
@@ -108,9 +133,11 @@ const HOURS = [
 export function SynthesisLab() {
   const [hour, setHour] = useState("");
   const [demo, setDemo] = useState(true);
+  const [useFrontier, setUseFrontier] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<SynthesisPayload | null>(null);
+  const [compose, setCompose] = useState<ComposePayload | null>(null);
 
   const run = useCallback(async () => {
     setLoading(true);
@@ -119,20 +146,38 @@ export function SynthesisLab() {
       const params = new URLSearchParams();
       if (demo) params.set("demo", "1");
       if (hour) params.set("hour", hour);
-      const res = await fetch(`/api/synthesize?${params.toString()}`, {
-        cache: "no-store",
-      });
-      const json = (await res.json()) as SynthesisPayload & { error?: string };
-      if (!res.ok || !json.ok) {
-        throw new Error(json.error ?? "Synthesis failed");
+
+      const composeParams = new URLSearchParams(params);
+      if (!useFrontier) composeParams.set("frontier", "0");
+      composeParams.set("seed", String(Date.now() % 1e9));
+
+      const [synthRes, composeRes] = await Promise.all([
+        fetch(`/api/synthesize?${params.toString()}`, { cache: "no-store" }),
+        fetch(`/api/compose?${composeParams.toString()}`, { cache: "no-store" }),
+      ]);
+
+      const synthJson = (await synthRes.json()) as SynthesisPayload & {
+        error?: string;
+      };
+      const composeJson = (await composeRes.json()) as ComposePayload & {
+        error?: string;
+      };
+
+      if (!synthRes.ok || !synthJson.ok) {
+        throw new Error(synthJson.error ?? "Synthesis failed");
       }
-      setData(json);
+      if (!composeRes.ok || !composeJson.ok) {
+        throw new Error(composeJson.error ?? "Composition failed");
+      }
+
+      setData(synthJson);
+      setCompose(composeJson);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unknown error");
     } finally {
       setLoading(false);
     }
-  }, [demo, hour]);
+  }, [demo, hour, useFrontier]);
 
   useEffect(() => {
     void run();
@@ -145,7 +190,10 @@ export function SynthesisLab() {
         <p>
           Experiment with how WHOOP biomarkers are curated at runtime and
           synthesized into ICMR-NIN-aligned nourishment — then validate which
-          insights truly carry value under load.
+          insights truly carry value under load. Probabilistic composition
+          updates nutrient foundations with Bayesian posteriors; frontier models
+          may dictate candidates, then get re-grounded before they guide the
+          plate.
         </p>
         <div className="toolbar">
           <div className="phase-picks" role="group" aria-label="Lifecycle hour">
@@ -168,7 +216,25 @@ export function SynthesisLab() {
             />{" "}
             Demo WHOOP fixtures
           </label>
-          <button className="btn" type="button" onClick={() => void run()} disabled={loading}>
+          <label>
+            <input
+              type="checkbox"
+              checked={useFrontier}
+              onChange={(e) => setUseFrontier(e.target.checked)}
+            />{" "}
+            Frontier dictation
+            {compose
+              ? compose.frontierAvailable
+                ? " (key present)"
+                : " (local Bayes — add API key)"
+              : ""}
+          </label>
+          <button
+            className="btn"
+            type="button"
+            onClick={() => void run()}
+            disabled={loading}
+          >
             {loading ? "Synthesizing…" : "Re-synthesize"}
           </button>
           <a className="btn btn-ghost" href="/api/whoop/auth">
@@ -196,6 +262,17 @@ export function SynthesisLab() {
               <span>
                 mean_value={data.assessment.meanValueScore.toFixed(0)}
               </span>
+              {compose && (
+                <>
+                  <span>compose={compose.composition.method}</span>
+                  <span>
+                    precision={compose.composition.precision.precisionScore}
+                    {compose.composition.precision.passesGrounding
+                      ? " grounded"
+                      : " hold"}
+                  </span>
+                </>
+              )}
             </div>
 
             <div className="metric-grid" style={{ marginBottom: "1.75rem" }}>
@@ -241,6 +318,169 @@ export function SynthesisLab() {
               </div>
             </div>
 
+            {compose && (
+              <div style={{ marginBottom: "2.5rem" }}>
+                <h2>Probabilistic plate</h2>
+                <p className="lead">
+                  Foundations are Bayesian posteriors over ICMR-NIN priors ×
+                  WHOOP likelihood × evidence temper. Frontier models may
+                  dictate candidates; precision is accepted only after grounding
+                  checks.
+                </p>
+
+                <div className="metric-grid" style={{ marginBottom: "1.25rem" }}>
+                  <div className="metric">
+                    <div className="label">Precision</div>
+                    <div className="value">
+                      {compose.composition.precision.precisionScore}
+                    </div>
+                  </div>
+                  <div className="metric">
+                    <div className="label">RDA coverage</div>
+                    <div className="value">
+                      {(
+                        compose.composition.precision.expectedRdaCoverage * 100
+                      ).toFixed(0)}
+                      <span className="unit">%</span>
+                    </div>
+                  </div>
+                  <div className="metric">
+                    <div className="label">Uncertainty σ</div>
+                    <div className="value" style={{ fontSize: "1.25rem" }}>
+                      {compose.composition.precision.coverageUncertainty.toFixed(
+                        3,
+                      )}
+                    </div>
+                  </div>
+                  <div className="metric">
+                    <div className="label">A/B mass</div>
+                    <div className="value">
+                      {(
+                        compose.composition.precision.evidenceAnchoredMass * 100
+                      ).toFixed(0)}
+                      <span className="unit">%</span>
+                    </div>
+                  </div>
+                  <div className="metric">
+                    <div className="label">Method</div>
+                    <div className="value" style={{ fontSize: "1rem" }}>
+                      {compose.composition.method.replaceAll("_", " ")}
+                    </div>
+                  </div>
+                  <div className="metric">
+                    <div className="label">Seed</div>
+                    <div className="value" style={{ fontSize: "1rem" }}>
+                      {compose.composition.seed}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="split">
+                  <div>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        margin: "0 0 0.75rem",
+                      }}
+                    >
+                      Posterior foundations
+                    </h3>
+                    <div className="insight-list">
+                      {compose.composition.foundations.slice(0, 8).map((f) => (
+                        <article key={f.nutrientId} className="panel">
+                          <h3>
+                            {f.name}{" "}
+                            <span
+                              className={`badge badge-${f.evidenceSupport.toLowerCase()}`}
+                            >
+                              {f.evidenceSupport}
+                            </span>
+                          </h3>
+                          <p>
+                            posterior {(f.posterior * 100).toFixed(1)}% · CI95 [
+                            {(f.ci95[0] * 100).toFixed(1)}–
+                            {(f.ci95[1] * 100).toFixed(1)}%] · prior{" "}
+                            {(f.prior * 100).toFixed(1)}% · L=
+                            {f.likelihood.toFixed(2)}
+                          </p>
+                          <p>
+                            RDA {f.rda}
+                            {f.unit} · {f.governingBody}
+                            {f.scientificDomains.length
+                              ? ` · ${f.scientificDomains.join(", ").replaceAll("_", " ")}`
+                              : ""}
+                          </p>
+                        </article>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        margin: "0 0 0.75rem",
+                      }}
+                    >
+                      Composed elements
+                    </h3>
+                    <div className="insight-list">
+                      {compose.composition.composition.map((el) => (
+                        <article key={el.foodId} className="insight">
+                          <header>
+                            <h4>
+                              {el.foodName} · {el.grams}g
+                            </h4>
+                            <span className="badge">
+                              p={el.selectionProbability.toFixed(3)}
+                            </span>
+                          </header>
+                          <p>{el.scientificRole}</p>
+                          <p className="meta">{el.category}</p>
+                        </article>
+                      ))}
+                    </div>
+
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        margin: "1.5rem 0 0.75rem",
+                      }}
+                    >
+                      Grounding
+                    </h3>
+                    <ul className="checks">
+                      {compose.composition.precision.groundingChecks.map(
+                        (c) => (
+                          <li key={c.id} data-ok={c.passed}>
+                            [{c.passed ? "ok" : "no"}] {c.detail}
+                          </li>
+                        ),
+                      )}
+                    </ul>
+
+                    {compose.composition.frontierNarrative && (
+                      <>
+                        <h3
+                          style={{
+                            fontFamily: "var(--font-display)",
+                            margin: "1.5rem 0 0.75rem",
+                          }}
+                        >
+                          Frontier narrative
+                          {compose.composition.frontierModel
+                            ? ` · ${compose.composition.frontierModel}`
+                            : ""}
+                        </h3>
+                        <p className="panel">
+                          {compose.composition.frontierNarrative}
+                        </p>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="split">
               <div>
                 <h2>Validated insights</h2>
@@ -257,7 +497,9 @@ export function SynthesisLab() {
                       <article key={insight.id} className="insight">
                         <header>
                           <h4>{insight.title}</h4>
-                          <span className={`badge badge-${insight.evidence.toLowerCase()}`}>
+                          <span
+                            className={`badge badge-${insight.evidence.toLowerCase()}`}
+                          >
                             evidence {insight.evidence}
                           </span>
                           <span
@@ -339,6 +581,11 @@ export function SynthesisLab() {
                 <h2 style={{ marginTop: "2rem" }}>Method</h2>
                 <ul className="checks" style={{ marginTop: "0.75rem" }}>
                   {data.synthesis.methodNotes.map((note) => (
+                    <li key={note} data-ok="true">
+                      {note}
+                    </li>
+                  ))}
+                  {compose?.composition.methodNotes.map((note) => (
                     <li key={note} data-ok="true">
                       {note}
                     </li>

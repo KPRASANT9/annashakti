@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const LINKS = [
-  { href: "/", label: "Home" },
+  { href: "/", label: "Kitchen" },
   { href: "/lab", label: "Synthesis Lab" },
   { href: "/whoop", label: "WHOOP Metrics" },
   { href: "/science", label: "Science" },
@@ -25,7 +25,7 @@ export function SiteNav() {
             href={l.href}
             data-active={
               l.href === "/"
-                ? pathname === "/"
+                ? false
                 : pathname.startsWith(l.href)
             }
           >

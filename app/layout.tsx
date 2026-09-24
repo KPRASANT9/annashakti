@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Literata, Syne, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { SiteNav } from "@/components/SiteNav";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -22,9 +21,9 @@ const plex = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Annashakti — precision nourishment under load",
+  title: "Annashakti — The plate that trains with you",
   description:
-    "WHOOP biomarkers curated at runtime, synthesized with ICMR-NIN nutrient science for balance and clarity under load.",
+    "Annashakti — putting the Indian body back together. The plate that trains with you.",
 };
 
 export default function RootLayout({
@@ -43,13 +42,7 @@ export default function RootLayout({
           } as React.CSSProperties
         }
       >
-        <div className="app-shell">
-          <SiteNav />
-          <main>{children}</main>
-          <footer className="footer">
-            Annashakti · kitchen science for full-spectrum resilience · not medical advice
-          </footer>
-        </div>
+        {children}
       </body>
     </html>
   );

@@ -58,6 +58,35 @@ export default function SciencePage() {
           ))}
         </div>
 
+        <h2 style={{ marginTop: "3rem" }}>Probabilistic + frontier composition</h2>
+        <p className="lead">
+          Nutrient foundations carry ICMR-NIN priors. WHOOP-linked likelihood
+          updates them into posteriors with evidence tempering (A–D). Frontier
+          models may dictate candidate elements; every plate is re-sampled and
+          grounded before precision is accepted. See{" "}
+          <a href="/lab" style={{ color: "var(--brass)" }}>
+            Synthesis lab
+          </a>
+          .
+        </p>
+        <div className="split">
+          <article className="panel">
+            <h3>Bayesian foundations</h3>
+            <p>
+              posterior ∝ prior × likelihood^α × evidenceTemper — with Dirichlet
+              CI95 so uncertainty is visible, not hidden.
+            </p>
+          </article>
+          <article className="panel">
+            <h3>Frontier dictation</h3>
+            <p>
+              Optional OpenAI / Anthropic call proposes foundations and plate
+              JSON. Nutritional value never comes from the model alone — the
+              probabilistic grounder has the last word.
+            </p>
+          </article>
+        </div>
+
         <h2 style={{ marginTop: "3rem" }}>ICMR-NIN nutrient anchors</h2>
         <p className="lead">
           Adult moderate-activity reference set used by the synthesis engine

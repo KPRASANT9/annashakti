@@ -1,0 +1,7 @@
+{
+  "redirects": [
+    { "source": "/catalog", "destination": "/", "permanent": true },
+    { "source": "/enter", "destination": "/", "permanent": true },
+    { "source": "/join", "destination": "/", "permanent": true }
+  ]
+}
