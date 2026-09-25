@@ -52,6 +52,21 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
 }
 #unlock .unlock-veil{background:linear-gradient(90deg,rgba(12,20,16,.92) 0%,rgba(12,20,16,.62) 38%,rgba(12,20,16,.22) 72%,rgba(12,20,16,.08) 100%),linear-gradient(0deg,rgba(12,20,16,.72) 0%,rgba(12,20,16,.12) 42%,transparent 70%)}
 #harness .harness-plate{transform:scaleX(-1)}
+/* Street night ends in ink. Build is a warmer workshop. Enter is a cooler forest. */
+#build{
+  background:
+    radial-gradient(90% 70% at 100% 0%, rgba(201,163,90,.22), transparent 58%),
+    linear-gradient(180deg, #3a2e1c 0%, #241c14 18%, #1a1610 100%);
+  box-shadow:inset 0 4px 0 #c9a35a;
+}
+#enroll{
+  background:linear-gradient(180deg, #123028 0%, #0a1c16 28%, #081410 100%);
+  box-shadow:inset 0 4px 0 #8fb59a;
+}
+#enroll .enroll-form{
+  background:#102820;
+  border-color:rgba(143,181,154,.35);
+}
 @media (prefers-reduced-motion:reduce){
   html{scroll-snap-type:none}
   .statement-copy{opacity:1;transform:none;filter:none;transition:none}
@@ -182,7 +197,7 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
     </div>
   </div>
 </section>
-<section id="build" class="gold-rail bg-ink">
+<section id="build" class="gold-rail">
   <div class="relative z-10 flex min-h-svh flex-col justify-center px-5 py-24 md:px-12">
     <div class="statement-copy max-w-4xl">
       <p class="kicker">What we are building</p>
@@ -206,14 +221,14 @@ section.is-in .statement-copy{opacity:1;transform:none;filter:none}
     </div>
   </div>
 </section>
-<section id="enroll" class="gold-rail bg-ink">
+<section id="enroll" class="gold-rail">
   <div class="grid lg:grid-cols-2">
     <div class="flex flex-col justify-center px-5 py-20 md:px-12">
       <p class="kicker">How you enter</p>
       <h2 class="mt-5 font-display text-statement text-cream">One letter. The first hundred.</h2>
       <p class="mt-4 max-w-md text-cream-dim">Leave a name. We keep the place, and we write back.</p>
     </div>
-    <div class="flex flex-col justify-center border-t border-line bg-forest px-5 py-16 md:px-12 lg:border-t-0 lg:border-l">
+    <div class="enroll-form flex flex-col justify-center border-t px-5 py-16 md:px-12 lg:border-t-0 lg:border-l">
       <p class="kicker">Leave a name</p>
       <p class="mt-4 max-w-md font-display text-2xl text-cream">We keep the place in the kitchen book, and we write back to the mailbox you give.</p>
       <form id="enroll-form" class="grid gap-5 mt-10">
