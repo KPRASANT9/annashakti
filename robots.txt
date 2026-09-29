@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /kitchen
+Disallow: /api/
+
+Sitemap: https://annashakti.org/sitemap.xml

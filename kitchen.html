@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Kitchen book · Annashakti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Outfit:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{--forest:#0c1410;--cream:#f3ead8;--gold:#c9a35a;--mute:#cbbf9d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--forest);color:var(--cream);font-family:Outfit,system-ui,sans-serif;padding:8vh 8vw 12vh}
+a{color:var(--gold);text-decoration:none}
+h1{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:clamp(2rem,5vw,3.4rem)}
+form{display:grid;gap:.8rem;max-width:28rem;margin:1.4rem 0}
+input,button{font:inherit;padding:.75rem .9rem;border-radius:.4rem}
+input{background:#111a15;color:var(--cream);border:1px solid #2a3a30}
+button{background:var(--gold);color:#1a1408;border:0;cursor:pointer}
+table{width:100%;border-collapse:collapse;margin-top:1.5rem}
+th,td{text-align:left;padding:.55rem .4rem;border-bottom:1px solid #2a3a30;font-size:.9rem}
+.mute{color:var(--mute)}
+.err{color:#e2a39a}
+</style>
+</head>
+<body>
+<p><a href="/">Annashakti</a></p>
+<h1>Kitchen book</h1>
+<p class="mute">Phrase first. Then the extract of people who kept a place.</p>
+<form id="latch">
+  <input name="phrase" type="password" placeholder="Kitchen phrase" required autocomplete="off" />
+  <input name="query" placeholder="Search name, mailbox, city" />
+  <button type="submit">Open the book</button>
+</form>
+<p id="status" class="mute"></p>
+<p>
+  <button type="button" id="csv">CSV</button>
+  <button type="button" id="json">JSON</button>
+</p>
+<table>
+  <thead><tr><th>Name</th><th>Mailbox</th><th>Role</th><th>City</th><th>When</th></tr></thead>
+  <tbody id="rows"></tbody>
+</table>
+<script>
+let last=[];
+const status=document.getElementById("status");
+document.getElementById("latch").addEventListener("submit",async(e)=>{
+  e.preventDefault();
+  const data=Object.fromEntries(new FormData(e.target).entries());
+  status.className="mute";status.textContent="Opening…";
+  try{
+    const res=await fetch("/api/kitchen",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+    const json=await res.json();
+    if(!json.ok){
+      status.className="err";
+      status.textContent=json.reason==="phrase"?"Phrase does not open the book.":"Could not read the book.";
+      last=[];document.getElementById("rows").innerHTML="";
+      return;
+    }
+    last=json.rows||[];
+    status.textContent=json.note==="no-db"
+      ?"Book opened. No database is wired yet, so the extract is empty."
+      :last.length+" rows";
+    document.getElementById("rows").innerHTML=last.map((r)=>"<tr><td>"+[r.name,r.email,r.role,r.city,r.created_at].map((x)=>x||"").join("</td><td>")+"</td></tr>").join("");
+  }catch{
+    status.className="err";status.textContent="Could not read the book.";
+  }
+});
+function download(name,text,type){
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([text],{type}));
+  a.download=name;a.click();
+}
+document.getElementById("csv").onclick=()=>{
+  const head="name,email,phone,role,city,created_at";
+  const body=last.map((r)=>[r.name,r.email,r.phone,r.role,r.city,r.created_at].map((x)=>`"${String(x||"").replaceAll('"','""')}"`).join(",")).join("\n");
+  download("annashakti-kitchen.csv",head+"\n"+body,"text/csv");
+};
+document.getElementById("json").onclick=()=>download("annashakti-kitchen.json",JSON.stringify(last,null,2),"application/json");
+</script>
+</body>
+</html>
