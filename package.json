@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "validate": "npx tsx scripts/validate-synthesis.ts && npx tsx scripts/validate-compose.ts"
+    "validate": "npx tsx scripts/validate-synthesis.ts && npx tsx scripts/validate-compose.ts && npx tsx scripts/validate-thali.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",

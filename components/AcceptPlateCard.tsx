@@ -144,6 +144,9 @@ export function AcceptPlateCard(props: Props) {
             Force-accept with caveat
           </button>
         )}
+        <a className="btn btn-ghost" href="/thali">
+          Open cookable thali
+        </a>
         <a className="btn btn-ghost" href="/loop">
           Open daily loop
         </a>

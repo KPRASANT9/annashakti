@@ -49,6 +49,19 @@ Prove Lift → Plate → Sleep for one practitioner:
 
 Log lives in the browser (localStorage); optional Neon mirror when `DATABASE_URL` is set.
 
+## MVP Slice B — cookable thali
+
+`/thali` — one page a home cook can follow (katori / roti / tsp language).
+
+Patterns: high strain · low recovery · poor sleep · balanced · mixed load.
+
+Print the page, or pick a pattern manually.
+
+## MVP Slice C — second kitchen
+
+On `/thali`, **Share with second kitchen** copies a link.  
+The other Hyderabad kitchen opens it, cooks, and submits what confused them (language / portions / steps…).
+
 ## WHOOP live mode
 
 Set `WHOOP_CLIENT_ID`, `WHOOP_CLIENT_SECRET`, `WHOOP_REDIRECT_URI` (see `.env.example`), then visit `/api/whoop/auth`.

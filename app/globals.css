@@ -588,3 +588,130 @@ main {
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+/* Slice B — cookable 1-page thali */
+.thali-card {
+  max-width: 40rem;
+  border: 1px solid var(--line-strong);
+  background: rgba(30, 46, 36, 0.72);
+  padding: 1.5rem 1.6rem 1.75rem;
+}
+
+.thali-card h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  letter-spacing: -0.02em;
+  margin: 0.35rem 0 0.75rem;
+}
+
+.thali-card h3 {
+  font-family: var(--font-display);
+  margin: 1.35rem 0 0.5rem;
+  font-size: 1.05rem;
+  color: var(--brass-soft);
+}
+
+.kicker-print {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0;
+}
+
+.thali-intent {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin: 0 0 0.65rem;
+  color: var(--ink);
+}
+
+.thali-why,
+.thali-timing {
+  color: var(--ink-muted);
+  margin: 0 0 0.45rem;
+}
+
+.thali-items,
+.thali-steps,
+.thali-avoid {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--ink-muted);
+}
+
+.thali-items li,
+.thali-steps li,
+.thali-avoid li {
+  margin: 0.45rem 0;
+}
+
+.thali-items strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+}
+
+.thali-how {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--ink-faint);
+  font-size: 0.92rem;
+}
+
+.thali-lab-note {
+  margin-top: 1.25rem;
+}
+
+.thali-foot {
+  margin: 1.5rem 0 0;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  .site-nav,
+  .footer,
+  .no-print {
+    display: none !important;
+  }
+
+  .thali-card {
+    border: 1px solid #222;
+    background: #fff;
+    color: #111;
+    max-width: 100%;
+    box-shadow: none;
+  }
+
+  .thali-card h2,
+  .thali-card h3,
+  .thali-intent,
+  .thali-items strong {
+    color: #111;
+  }
+
+  .thali-why,
+  .thali-timing,
+  .thali-items,
+  .thali-steps,
+  .thali-avoid,
+  .thali-how,
+  .kicker-print,
+  .thali-foot {
+    color: #333;
+  }
+
+  .section {
+    padding: 0;
+    max-width: none;
+  }
+}

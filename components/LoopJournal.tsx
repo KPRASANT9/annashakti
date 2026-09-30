@@ -95,6 +95,9 @@ export function LoopJournal() {
           <a className="btn" href="/lab">
             Open lab → accept plate
           </a>
+          <a className="btn btn-ghost" href="/thali">
+            Tonight’s thali (cook page)
+          </a>
           <a className="btn btn-ghost" href="/api/whoop/auth">
             Connect WHOOP
           </a>
