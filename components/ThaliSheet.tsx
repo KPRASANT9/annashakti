@@ -88,13 +88,27 @@ export function ThaliSheet({ initialShare, initialPattern }: Props) {
   }, [shared, today, patternOverride]);
 
   function makeShare() {
-    const token = encodeShare(thali.sharePayload);
-    const url = `${window.location.origin}/thali?share=${token}`;
-    setShareUrl(url);
-    void navigator.clipboard?.writeText(url).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
+    try {
+      const token = encodeShare(thali.sharePayload);
+      const url = `${window.location.origin}/thali?share=${token}`;
+      setShareUrl(url);
+      if (navigator.clipboard?.writeText) {
+        void navigator.clipboard.writeText(url).then(
+          () => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+          },
+          () => {
+            /* clipboard blocked — URL still shown on page */
+          },
+        );
+      }
+    } catch (e) {
+      setShareUrl(null);
+      setFeedbackMsg(
+        e instanceof Error ? e.message : "Could not build share link",
+      );
+    }
   }
 
   async function submitFeedback() {
