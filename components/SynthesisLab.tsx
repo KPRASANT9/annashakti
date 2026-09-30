@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { AcceptPlateCard } from "@/components/AcceptPlateCard";
 
 type Assessment = {
   totalInsights: number;
@@ -138,6 +139,31 @@ export function SynthesisLab() {
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<SynthesisPayload | null>(null);
   const [compose, setCompose] = useState<ComposePayload | null>(null);
+  const [whoopStatus, setWhoopStatus] = useState<{
+    connected: boolean;
+    configured: boolean;
+    mode: string;
+    hint: string;
+  } | null>(null);
+
+  useEffect(() => {
+    void (async () => {
+      try {
+        const res = await fetch("/api/whoop/status", { cache: "no-store" });
+        const json = (await res.json()) as {
+          connected: boolean;
+          configured: boolean;
+          mode: string;
+          hint: string;
+        };
+        setWhoopStatus(json);
+        // Slice A: prefer live when a token/session is already available.
+        if (json.connected) setDemo(false);
+      } catch {
+        // keep demo default
+      }
+    })();
+  }, []);
 
   const run = useCallback(async () => {
     setLoading(true);
@@ -188,13 +214,17 @@ export function SynthesisLab() {
       <header className="lab-header">
         <h1>Synthesis lab</h1>
         <p>
-          Experiment with how WHOOP biomarkers are curated at runtime and
-          synthesized into ICMR-NIN-aligned nourishment — then validate which
-          insights truly carry value under load. Probabilistic composition
-          updates nutrient foundations with Bayesian posteriors; frontier models
-          may dictate candidates, then get re-grounded before they guide the
-          plate.
+          Slice A: curate WHOOP biomarkers, compose a grounded plate, accept it
+          for today, then track cook → sleep → next-day clarity in the Daily
+          loop.
         </p>
+        {whoopStatus && (
+          <p className="mono" style={{ marginTop: "0.5rem" }}>
+            WHOOP: mode={whoopStatus.mode} configured=
+            {String(whoopStatus.configured)} connected=
+            {String(whoopStatus.connected)} — {whoopStatus.hint}
+          </p>
+        )}
         <div className="toolbar">
           <div className="phase-picks" role="group" aria-label="Lifecycle hour">
             {HOURS.map((h) => (
@@ -240,6 +270,9 @@ export function SynthesisLab() {
           <a className="btn btn-ghost" href="/api/whoop/auth">
             Connect WHOOP
           </a>
+          <a className="btn btn-ghost" href="/loop">
+            Daily loop
+          </a>
         </div>
       </header>
 
@@ -274,6 +307,35 @@ export function SynthesisLab() {
                 </>
               )}
             </div>
+
+            {compose && (
+              <AcceptPlateCard
+                grounded={compose.composition.precision.passesGrounding}
+                precisionScore={compose.composition.precision.precisionScore}
+                composeMethod={compose.composition.method}
+                seed={compose.composition.seed}
+                source={
+                  data.mode === "live" && data.connected
+                    ? "whoop_live"
+                    : "whoop_demo"
+                }
+                recovery={data.synthesis.biomarkers.recovery.score}
+                hrv={data.synthesis.biomarkers.recovery.hrvRmssdMilli}
+                strain={data.synthesis.biomarkers.cycle.strain}
+                sleepPerformance={
+                  data.synthesis.biomarkers.sleep.performancePercent
+                }
+                clarityUnderLoad={data.synthesis.loadState.clarityUnderLoad}
+                loadLabel={data.synthesis.loadState.label}
+                lifecyclePhase={data.synthesis.lifecycle.phase}
+                foods={compose.composition.composition.map((f) => ({
+                  foodId: f.foodId,
+                  foodName: f.foodName,
+                  grams: f.grams,
+                  category: f.category,
+                }))}
+              />
+            )}
 
             <div className="metric-grid" style={{ marginBottom: "1.75rem" }}>
               <div className="metric">
