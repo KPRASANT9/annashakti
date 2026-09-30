@@ -122,6 +122,44 @@ type ComposePayload = {
   };
 };
 
+type CyberScenarioRow = {
+  scenario: string;
+  label: string;
+  intent: string;
+  priorClarity: number;
+  pattern: string;
+  plateGrounded: boolean;
+  precisionScore: number;
+  clarityUnderLoad: number;
+  cyber: {
+    wellbeingBand: string;
+    strainHandling: string;
+    clarityUnderLoad: number;
+    workloadIndex: number;
+    handlingScore: number;
+    patternId: string;
+    passes: boolean;
+    feedbackAdjustment: {
+      previousClarity: number | null;
+      adapted: boolean;
+      reason: string;
+    };
+    checks: Array<{ id: string; passed: boolean; detail: string }>;
+  };
+};
+
+type CyberPayload = {
+  ok: boolean;
+  mode: string;
+  summary: {
+    scenarios: number;
+    cyberPass: number;
+    platesGrounded: number;
+    meanHandling: number;
+  };
+  scenarios: CyberScenarioRow[];
+};
+
 const HOURS = [
   { value: "", label: "Now (local)" },
   { value: "7", label: "07:00 morning" },
@@ -139,6 +177,7 @@ export function SynthesisLab() {
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<SynthesisPayload | null>(null);
   const [compose, setCompose] = useState<ComposePayload | null>(null);
+  const [cyber, setCyber] = useState<CyberPayload | null>(null);
   const [whoopStatus, setWhoopStatus] = useState<{
     connected: boolean;
     configured: boolean;
@@ -177,15 +216,24 @@ export function SynthesisLab() {
       if (!useFrontier) composeParams.set("frontier", "0");
       composeParams.set("seed", String(Date.now() % 1e9));
 
-      const [synthRes, composeRes] = await Promise.all([
+      const cyberParams = new URLSearchParams();
+      if (hour) cyberParams.set("hour", hour);
+
+      const [synthRes, composeRes, cyberRes] = await Promise.all([
         fetch(`/api/synthesize?${params.toString()}`, { cache: "no-store" }),
         fetch(`/api/compose?${composeParams.toString()}`, { cache: "no-store" }),
+        fetch(`/api/cybernetics?${cyberParams.toString()}`, {
+          cache: "no-store",
+        }),
       ]);
 
       const synthJson = (await synthRes.json()) as SynthesisPayload & {
         error?: string;
       };
       const composeJson = (await composeRes.json()) as ComposePayload & {
+        error?: string;
+      };
+      const cyberJson = (await cyberRes.json()) as CyberPayload & {
         error?: string;
       };
 
@@ -195,9 +243,13 @@ export function SynthesisLab() {
       if (!composeRes.ok || !composeJson.ok) {
         throw new Error(composeJson.error ?? "Composition failed");
       }
+      if (!cyberRes.ok) {
+        throw new Error(cyberJson.error ?? "Cybernetics lab failed");
+      }
 
       setData(synthJson);
       setCompose(composeJson);
+      setCyber(cyberJson);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unknown error");
     } finally {
@@ -214,9 +266,9 @@ export function SynthesisLab() {
       <header className="lab-header">
         <h1>Synthesis lab</h1>
         <p>
-          Slice A: curate WHOOP biomarkers, compose a grounded plate, accept it
-          for today, then track cook → sleep → next-day clarity in the Daily
-          loop.
+          Curate WHOOP biomarkers, compose a grounded plate, then validate
+          well-being × strain handling through the cybernetic feedback-workload
+          loop (clarity under load → next plate adaptation).
         </p>
         {whoopStatus && (
           <p className="mono" style={{ marginTop: "0.5rem" }}>
@@ -379,6 +431,54 @@ export function SynthesisLab() {
                 </div>
               </div>
             </div>
+
+            {cyber && (
+              <div style={{ marginBottom: "2.5rem" }}>
+                <h2>Cybernetic workload lab</h2>
+                <p className="lead">
+                  Well-being bands and strain handling across WHOOP workload
+                  scenarios. Prior clarity feeds back into tonight’s pattern
+                  (protect / fuel / settle).
+                </p>
+                <div className="status-bar" style={{ marginBottom: "1rem" }}>
+                  <span>
+                    cyber_pass={cyber.summary.cyberPass}/
+                    {cyber.summary.scenarios}
+                  </span>
+                  <span>
+                    plates_grounded={cyber.summary.platesGrounded}/
+                    {cyber.summary.scenarios}
+                  </span>
+                  <span>mean_handling={cyber.summary.meanHandling}</span>
+                  <span>
+                    suite={cyber.ok ? "green" : "needs_tune"}
+                  </span>
+                </div>
+                <div className="metric-grid">
+                  {cyber.scenarios.map((row) => (
+                    <div className="metric" key={row.scenario}>
+                      <div className="label">
+                        {row.label} — {row.cyber.passes ? "pass" : "fail"}
+                      </div>
+                      <div
+                        className="value"
+                        style={{ fontSize: "0.95rem", lineHeight: 1.35 }}
+                      >
+                        {row.cyber.wellbeingBand} · {row.cyber.strainHandling}
+                      </div>
+                      <p className="mono" style={{ marginTop: "0.4rem" }}>
+                        workload={row.cyber.workloadIndex} clarity=
+                        {row.clarityUnderLoad} handling=
+                        {row.cyber.handlingScore} pattern={row.cyber.patternId}
+                        {row.cyber.feedbackAdjustment.adapted
+                          ? " · feedback"
+                          : ""}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {compose && (
               <div style={{ marginBottom: "2.5rem" }}>
