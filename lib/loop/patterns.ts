@@ -364,33 +364,37 @@ export function buildCookableThali(input: {
   };
 }
 
-export function encodeShare(payload: ShareableThali): string {
-  const json = JSON.stringify(payload);
-  if (typeof Buffer !== "undefined") {
-    return Buffer.from(json, "utf8").toString("base64url");
+function toBase64Url(json: string): string {
+  // Prefer browser-safe path — Next may polyfill Buffer without base64url.
+  if (typeof btoa === "function") {
+    const bytes = new TextEncoder().encode(json);
+    let bin = "";
+    bytes.forEach((b) => {
+      bin += String.fromCharCode(b);
+    });
+    return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
   }
-  // browser
-  const bytes = new TextEncoder().encode(json);
-  let bin = "";
-  bytes.forEach((b) => {
-    bin += String.fromCharCode(b);
-  });
-  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  return Buffer.from(json, "utf8").toString("base64url");
+}
+
+function fromBase64Url(token: string): string {
+  const pad = token.length % 4 === 0 ? "" : "=".repeat(4 - (token.length % 4));
+  const b64 = token.replace(/-/g, "+").replace(/_/g, "/") + pad;
+  if (typeof atob === "function") {
+    const bin = atob(b64);
+    const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  }
+  return Buffer.from(token, "base64url").toString("utf8");
+}
+
+export function encodeShare(payload: ShareableThali): string {
+  return toBase64Url(JSON.stringify(payload));
 }
 
 export function decodeShare(token: string): ShareableThali | null {
   try {
-    let json: string;
-    if (typeof Buffer !== "undefined") {
-      json = Buffer.from(token, "base64url").toString("utf8");
-    } else {
-      const pad = token.length % 4 === 0 ? "" : "=".repeat(4 - (token.length % 4));
-      const b64 = token.replace(/-/g, "+").replace(/_/g, "/") + pad;
-      const bin = atob(b64);
-      const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
-      json = new TextDecoder().decode(bytes);
-    }
-    const parsed = JSON.parse(json) as ShareableThali;
+    const parsed = JSON.parse(fromBase64Url(token)) as ShareableThali;
     if (parsed?.v !== 1 || !parsed.patternId) return null;
     return parsed;
   } catch {
